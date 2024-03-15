@@ -1,8 +1,7 @@
 import { Gauge } from './gauge';
 import { getOrCreateMetric } from './get-or-create-metric';
 import { OpenTelemetryBuilder } from '../../core/builders/open-telemetry.builder';
-import { mock } from 'jest-mock-extended';
-import { PeriodicExportingMetricReader, PushMetricExporter } from '@opentelemetry/sdk-metrics';
+import { ConsoleMetricExporter, PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import { getMetrics } from '../../../testing/util';
 
 describe('Gauge', () => {
@@ -13,7 +12,7 @@ describe('Gauge', () => {
   beforeEach(() => {
     new OpenTelemetryBuilder('test')
       .withMetrics(x => x.withMetricReader(new PeriodicExportingMetricReader({
-        exporter: mock<PushMetricExporter>()
+        exporter: new ConsoleMetricExporter()
       })))
       .start();
 

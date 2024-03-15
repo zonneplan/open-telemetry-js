@@ -3,7 +3,6 @@ import { startActiveSpan } from '../span/start-active-span';
 import { SPAN_ATTRIBUTES } from '../constants';
 import { SpanAttributeParameter } from '../models/span-attribute-parameter.model';
 import { getTracer } from '../tracer/get-tracer';
-import { getMetadata } from 'reflect-metadata/no-conflict';
 
 export function span(options?: SpanOptions): MethodDecorator;
 export function span(name?: string, options?: SpanOptions): MethodDecorator;
@@ -58,7 +57,7 @@ export function span(
         return originalMethod.apply(this, args);
       }
 
-      const extractableAttributes = (getMetadata(
+      const extractableAttributes = (Reflect.getMetadata(
         SPAN_ATTRIBUTES,
         this.constructor
       ) ?? []) as SpanAttributeParameter[];

@@ -1,7 +1,6 @@
 import { metricIncrement } from './metric-increment.decorator';
 import { OpenTelemetryBuilder } from '../../core/builders/open-telemetry.builder';
-import { mock } from 'jest-mock-extended';
-import { MetricReader } from '@opentelemetry/sdk-metrics';
+import { ConsoleMetricExporter, PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import { GlobalProviders } from '../../globals';
 import { getMetrics } from '../../../testing/util';
 import SpyInstance = jest.SpyInstance;
@@ -10,8 +9,11 @@ describe('MetricIncrement', () => {
   let consoleWarnSpy: SpyInstance;
 
   beforeEach(() => {
+    // @todo: use mock metric readers / exporters
     new OpenTelemetryBuilder('test')
-      .withMetrics(x => x.withMetricReader(mock<MetricReader>()))
+      .withMetrics(x => x.withMetricReader(new PeriodicExportingMetricReader({
+        exporter: new ConsoleMetricExporter()
+      })))
       .start();
 
     consoleWarnSpy = jest

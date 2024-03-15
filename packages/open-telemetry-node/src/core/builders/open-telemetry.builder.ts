@@ -141,8 +141,6 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     this.tryEnableLogging();
     this.tryEnableMetrics();
     this.tryEnableTracing();
-
-    console.log('OpenTelemetryBuilder.start');
   }
 
   private tryEnableDebugLogging() {

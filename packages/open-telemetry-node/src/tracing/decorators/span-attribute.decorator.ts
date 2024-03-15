@@ -1,7 +1,7 @@
 import { SpanAttributeParameter } from '../models/span-attribute-parameter.model';
 import { SPAN_ATTRIBUTES } from '../constants';
 import { InvalidParameterAttributeError } from '../errors/invalid-parameter-attribute.error';
-import { defineMetadata, getMetadata } from 'reflect-metadata/no-conflict';
+import 'reflect-metadata';
 
 export function spanAttribute<T>(
   name?: string,
@@ -35,11 +35,8 @@ export function spanAttribute<T>(
         getParameterNames(target[propertyKey])[parameterIndex];
     const parseFn = typeof nameOrFn === 'function' ? nameOrFn : fn;
 
-    const paramType = getMetadata(
-      'design:paramtypes',
-      target,
-      propertyKey
-    )[0];
+    const paramTypes = Reflect.getMetadata('design:paramtypes', target, propertyKey);
+    const paramType = paramTypes[0];
 
     if (
       parseFn === undefined &&
@@ -51,7 +48,7 @@ export function spanAttribute<T>(
     }
 
     const targetInRegistry: SpanAttributeParameter[] =
-      getMetadata(SPAN_ATTRIBUTES, target.constructor) ?? [];
+      Reflect.getMetadata(SPAN_ATTRIBUTES, target.constructor) ?? [];
 
     targetInRegistry.push(<SpanAttributeParameter>{
       name: String(name),
@@ -59,7 +56,7 @@ export function spanAttribute<T>(
       parseFn: parseFn ? parseFn : (param: T) => param
     });
 
-    defineMetadata(
+    Reflect.defineMetadata(
       SPAN_ATTRIBUTES,
       targetInRegistry,
       target.constructor

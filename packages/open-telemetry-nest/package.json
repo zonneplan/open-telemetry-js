@@ -1,10 +1,11 @@
 {
   "name": "@zonneplan/open-telemetry-nest",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "dependencies": {
     "@nestjs/common": "^10.3.3",
     "@opentelemetry/exporter-prometheus": "^0.49.1",
     "@opentelemetry/sdk-metrics": "^1.22.0",
+    "@zonneplan/open-telemetry-node": "^1.0.0",
     "prom-client": "^15.1.0",
     "tslib": "^2.3.0"
   },

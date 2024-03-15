@@ -1,7 +1,6 @@
 import { createMetricProvider } from './create-metric-provider';
 import { Gauge, OpenTelemetryBuilder } from '@zonneplan/open-telemetry-node';
-import { MetricReader } from '@opentelemetry/sdk-metrics';
-import { mock } from 'jest-mock-extended';
+import { ConsoleMetricExporter, PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 
 describe('createMetricProvider', () => {
   it('should return undefined if metricProvider is not initialized', () => {
@@ -32,7 +31,9 @@ describe('createMetricProvider', () => {
   it('should return a provider with the correct token and factory', () => {
     // Arrange
     new OpenTelemetryBuilder('test')
-      .withMetrics(x => x.withMetricReader(mock<MetricReader>()))
+      .withMetrics(x => x.withMetricReader(new PeriodicExportingMetricReader({
+        exporter: new ConsoleMetricExporter()
+      })))
       .start();
 
     // Act

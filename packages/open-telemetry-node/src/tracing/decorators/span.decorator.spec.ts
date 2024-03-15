@@ -7,6 +7,7 @@ describe('span decorator', () => {
     @span('testMethod')
     async testAsyncMethod(): Promise<string> {
       return new Promise<string>((resolve) => {
+        //@todo mock time
         setTimeout(() => {
           resolve('test');
         }, 2000);

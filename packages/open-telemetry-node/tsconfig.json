@@ -7,7 +7,15 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2022",
+    "lib": [
+      "es2022",
+      "esnext.disposable",
+      "DOM"
+    ]
   },
   "files": [],
   "include": [],

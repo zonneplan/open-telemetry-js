@@ -1,10 +1,10 @@
 import { InvalidParameterAttributeError } from '../errors/invalid-parameter-attribute.error';
 import { spanAttribute } from './span-attribute.decorator';
 import { span } from './span.decorator';
-import { getActiveSpan } from '@opentelemetry/api/build/src/trace/context-utils';
 import { OpenTelemetryBuilder } from '../../core/builders/open-telemetry.builder';
 import { AlwaysOffSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace-node';
 import { getSpanAttributes } from '../../../testing/util';
+import { trace } from '@opentelemetry/api';
 
 describe('SpanAttributeDecorator', () => {
   beforeAll(() => {
@@ -36,7 +36,7 @@ describe('SpanAttributeDecorator', () => {
         @spanAttribute() _testParam: string,
         @spanAttribute() _testParam2: number
       ) {
-        return getActiveSpan();
+        return trace.getActiveSpan();
       }
     }
 
@@ -58,7 +58,7 @@ describe('SpanAttributeDecorator', () => {
     class TestClass {
       @span()
       public testMethod(@spanAttribute('testName') _testParam: string) {
-        return getActiveSpan();
+        return trace.getActiveSpan();
       }
     }
 
@@ -86,7 +86,7 @@ describe('SpanAttributeDecorator', () => {
           obj: string;
         }
       ) {
-        return getActiveSpan();
+        return trace.getActiveSpan();
       }
     }
 
@@ -114,7 +114,7 @@ describe('SpanAttributeDecorator', () => {
           obj: string;
         }
       ) {
-        return getActiveSpan();
+        return trace.getActiveSpan();
       }
     }
 
@@ -142,7 +142,7 @@ describe('SpanAttributeDecorator', () => {
         )
           _testParam: string
       ) {
-        return getActiveSpan();
+        return trace.getActiveSpan();
       }
     }
 
