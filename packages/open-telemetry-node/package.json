@@ -11,6 +11,10 @@
     "prom-client": "^15.1.0",
     "tslib": "^2.3.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zonneplan/open-telemetry-js.git"
+  },
   "type": "commonjs",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
