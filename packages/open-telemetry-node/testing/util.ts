@@ -1,11 +1,11 @@
 import { Span } from '@opentelemetry/api';
 import { GlobalProviders } from '../src';
 
-export const getSpanName = (span: Span) => {
+export const getSpanName = (span?: Span) => {
   return (span as never)['name'];
 };
 
-export const getSpanAttributes = (span: Span) => {
+export const getSpanAttributes = (span?: Span) => {
   return (span as never)['attributes'];
 };
 

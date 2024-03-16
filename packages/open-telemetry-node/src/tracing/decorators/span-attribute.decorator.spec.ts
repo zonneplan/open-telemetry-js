@@ -23,6 +23,7 @@ describe('SpanAttributeDecorator', () => {
       class _TestClass {
         @span()
         public testMethod(@spanAttribute() _: Date) {
+          // ignored
         }
       }
     }).toThrow(InvalidParameterAttributeError);
@@ -47,7 +48,7 @@ describe('SpanAttributeDecorator', () => {
 
     // Assert
     expect(activeSpan).toBeDefined();
-    expect(getSpanAttributes(activeSpan!)).toEqual({
+    expect(getSpanAttributes(activeSpan)).toEqual({
       ['_testParam']: 'testValue',
       ['_testParam2']: 1
     });
@@ -69,7 +70,7 @@ describe('SpanAttributeDecorator', () => {
 
     // Assert
     expect(activeSpan).toBeDefined();
-    expect(getSpanAttributes(activeSpan!)).toEqual({
+    expect(getSpanAttributes(activeSpan)).toEqual({
       testName: 'testValue'
     });
   });
@@ -97,7 +98,7 @@ describe('SpanAttributeDecorator', () => {
 
     // Assert
     expect(activeSpan).toBeDefined();
-    expect(getSpanAttributes(activeSpan!)).toEqual({
+    expect(getSpanAttributes(activeSpan)).toEqual({
       ['_testParam']: 'TESTVALUE'
     });
   });
@@ -125,7 +126,7 @@ describe('SpanAttributeDecorator', () => {
 
     // Assert
     expect(activeSpan).toBeDefined();
-    expect(getSpanAttributes(activeSpan!)).toEqual({
+    expect(getSpanAttributes(activeSpan)).toEqual({
       testName: 'TESTVALUE'
     });
   });
