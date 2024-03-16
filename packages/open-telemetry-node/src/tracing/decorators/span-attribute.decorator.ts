@@ -36,7 +36,7 @@ export function spanAttribute<T>(
     const parseFn = typeof nameOrFn === 'function' ? nameOrFn : fn;
 
     const paramTypes = Reflect.getMetadata('design:paramtypes', target, propertyKey);
-    const paramType = paramTypes[0];
+    const paramType = paramTypes[parameterIndex];
 
     if (
       parseFn === undefined &&
