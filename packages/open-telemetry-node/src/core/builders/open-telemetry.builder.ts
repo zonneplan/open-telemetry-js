@@ -62,9 +62,10 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   private loggingOptions?: OpenTelemetryLoggingOptions;
   private metricsOptions?: OpenTelemetryMetricsOptions;
   private tracingOptions?: OpenTelemetryTracingOptions;
-  private resource = this.getResource();
+  private resource: IResource;
 
   public constructor(private readonly serviceName: string) {
+    this.resource = this.getResource();
   }
 
   public withDebugLogging(): IOpenTelemetryBuilder {
