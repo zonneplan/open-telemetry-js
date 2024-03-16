@@ -1,0 +1,24 @@
+{
+  "name": "nest-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "examples/nest-app/src",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "nest-app:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "nest-app:build:development"
+        },
+        "production": {
+          "buildTarget": "nest-app:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}
