@@ -8,12 +8,6 @@ export const getMetricProvideToken = (name: string): string => {
 export const createMetricProvider = <TMetricType extends MetricType>(
   options: MetricOptions<TMetricType>
 ): Provider => {
-  if (!GlobalProviders.metricProvider) {
-    console.error(
-      'OpenTelemetry metrics are not initialized. Provider will return undefined'
-    );
-  }
-
   return {
     provide: getMetricProvideToken(options.name),
     useFactory: () =>

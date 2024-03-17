@@ -1,5 +1,4 @@
-import { OptionsBuilderFn, OptionsBuilderOptions } from '../models/options-builder.models';
-import { getOptions } from '../utils/get-options.util';
+import { OptionsBuilder, OptionsBuilderFn, OptionsBuilderOptions } from '../models/options-builder.models';
 import {
   IOpenTelemetryTracingOptionsBuilder,
   OpenTelemetryTracingOptions,
@@ -29,6 +28,7 @@ import { GlobalProviders } from '../../globals';
 import {
   SEMRESATTRS_SERVICE_NAME
 } from '@opentelemetry/semantic-conventions/build/src/resource/SemanticResourceAttributes';
+import { Entries } from '../types/entries.type';
 
 export interface IOpenTelemetryBuilder {
   withDebugLogging(): this;
@@ -86,12 +86,12 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
       OpenTelemetryLoggingOptions
     >
   ): this {
-    const options = getOptions(
+    const options = this.getOptions(
       OpenTelemetryLoggingOptionsBuilder,
       optionsBuilderOrOptions
     );
 
-    this.loggingOptions = { ...this.loggingOptions, ...options };
+    this.loggingOptions = this.mergeOptions(this.loggingOptions, options);
     return this;
   }
 
@@ -107,12 +107,12 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
       OpenTelemetryMetricsOptions
     >
   ): this {
-    const options = getOptions(
+    const options = this.getOptions(
       OpenTelemetryMetricsOptionsBuilder,
       optionsBuilderOrOptions
     );
 
-    this.metricsOptions = { ...this.metricsOptions, ...options };
+    this.metricsOptions = this.mergeOptions(this.metricsOptions, options);
     return this;
   }
 
@@ -128,12 +128,12 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
       OpenTelemetryTracingOptions
     >
   ): this {
-    const options = getOptions(
+    const options = this.getOptions(
       OpenTelemetryTracingOptionsBuilder,
       optionsBuilderOrOptions
     );
 
-    this.tracingOptions = { ...this.tracingOptions, ...options };
+    this.tracingOptions = this.mergeOptions(this.tracingOptions, options);
     return this;
   }
 
@@ -169,6 +169,10 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     GlobalProviders.logProvider.addLogRecordProcessor(
       new BatchLogRecordProcessor(compositeLogger)
     );
+
+    if (this.debugLoggingEnabled) {
+      console.debug('Logging enabled.');
+    }
   }
 
   private tryEnableMetrics() {
@@ -188,6 +192,10 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
 
     const meter = meterProvider.getMeter('@zonneplan/open-telemetry-node');
     GlobalProviders.metricProvider = new MetricProvider(meter);
+
+    if (this.debugLoggingEnabled) {
+      console.debug('Metrics enabled.');
+    }
   }
 
   private tryEnableTracing() {
@@ -213,6 +221,10 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     }
 
     GlobalProviders.tracerProvider.register();
+
+    if (this.debugLoggingEnabled) {
+      console.debug('Tracing enabled.');
+    }
   }
 
   /**
@@ -228,5 +240,40 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     });
 
     return baseResource.merge(detectedResources);
+  }
+
+  private getOptions<
+    TBuilder extends OptionsBuilder<TOptions>,
+    TOptions extends object,
+  >(
+    builderType: new () => TBuilder,
+    optionsBuilderOrOptions: OptionsBuilderOptions<TBuilder, TOptions>
+  ): TOptions {
+    if (typeof optionsBuilderOrOptions === 'function') {
+      const builder = new builderType();
+      optionsBuilderOrOptions(builder);
+      return builder.build();
+    }
+
+    return optionsBuilderOrOptions;
+  }
+
+  /**
+   * Merges options, if the option is of type array, the result will be the concatenation of both arrays.
+   */
+  private mergeOptions<
+    TOptions extends object,
+  >(
+    options: TOptions | undefined,
+    overrides: Partial<TOptions>
+  ): TOptions {
+    const merged = { ...options };
+
+    for (const [key, value] of Object.entries(overrides) as Entries<TOptions>) {
+      // @ts-expect-error - we know that the key is a key of TOptions
+      merged[key] = Array.isArray(value) ? [...(merged[key] ?? []), ...value] : value;
+    }
+
+    return merged as TOptions;
   }
 }
