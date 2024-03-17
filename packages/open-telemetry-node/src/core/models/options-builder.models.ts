@@ -1,5 +1,7 @@
 export interface OptionsBuilder<T> {
-    build(): T;
+  $if(condition: boolean, fn: OptionsBuilderFn<this>): this;
+
+  build(): T;
 }
 
 export type OptionsBuilderOptions<

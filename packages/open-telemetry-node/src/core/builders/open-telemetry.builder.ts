@@ -31,28 +31,28 @@ import {
 } from '@opentelemetry/semantic-conventions/build/src/resource/SemanticResourceAttributes';
 
 export interface IOpenTelemetryBuilder {
-  withDebugLogging(): IOpenTelemetryBuilder;
+  withDebugLogging(): this;
 
   withLogging(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       IOpenTelemetryLoggingOptionsBuilder,
       OpenTelemetryLoggingOptions
     >
-  ): IOpenTelemetryBuilder;
+  ): this;
 
   withMetrics(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       IOpenTelemetryMetricsOptionsBuilder,
       OpenTelemetryMetricsOptions
     >
-  ): IOpenTelemetryBuilder;
+  ): this;
 
   withTracing(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       IOpenTelemetryTracingOptionsBuilder,
       OpenTelemetryTracingOptions
     >
-  ): IOpenTelemetryBuilder;
+  ): this;
 
   start(): void;
 }
@@ -68,7 +68,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     this.resource = this.getResource();
   }
 
-  public withDebugLogging(): IOpenTelemetryBuilder {
+  public withDebugLogging(): this {
     this.debugLoggingEnabled = true;
 
     return this;
@@ -76,16 +76,16 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
 
   public withLogging(
     optionsBuilder: OptionsBuilderFn<IOpenTelemetryLoggingOptionsBuilder>
-  ): IOpenTelemetryBuilder;
+  ): this;
   public withLogging(
     options: OpenTelemetryLoggingOptions
-  ): IOpenTelemetryBuilder;
+  ): this;
   public withLogging(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       OpenTelemetryLoggingOptionsBuilder,
       OpenTelemetryLoggingOptions
     >
-  ): IOpenTelemetryBuilder {
+  ): this {
     const options = getOptions(
       OpenTelemetryLoggingOptionsBuilder,
       optionsBuilderOrOptions
@@ -97,16 +97,16 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
 
   public withMetrics(
     optionsBuilder: OptionsBuilderFn<IOpenTelemetryMetricsOptionsBuilder>
-  ): IOpenTelemetryBuilder;
+  ): this;
   public withMetrics(
     options: OpenTelemetryMetricsOptions
-  ): IOpenTelemetryBuilder;
+  ): this;
   public withMetrics(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       OpenTelemetryMetricsOptionsBuilder,
       OpenTelemetryMetricsOptions
     >
-  ): IOpenTelemetryBuilder {
+  ): this {
     const options = getOptions(
       OpenTelemetryMetricsOptionsBuilder,
       optionsBuilderOrOptions
@@ -118,16 +118,16 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
 
   public withTracing(
     optionsBuilder: OptionsBuilderFn<IOpenTelemetryTracingOptionsBuilder>
-  ): IOpenTelemetryBuilder;
+  ): this;
   public withTracing(
     options: OpenTelemetryTracingOptions
-  ): IOpenTelemetryBuilder;
+  ): this;
   public withTracing(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       OpenTelemetryTracingOptionsBuilder,
       OpenTelemetryTracingOptions
     >
-  ): IOpenTelemetryBuilder {
+  ): this {
     const options = getOptions(
       OpenTelemetryTracingOptionsBuilder,
       optionsBuilderOrOptions

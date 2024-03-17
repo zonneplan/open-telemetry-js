@@ -1,52 +1,58 @@
-import { OptionsBuilder } from '../../core/models/options-builder.models';
+import { OptionsBuilder, OptionsBuilderFn } from '../../core/models/options-builder.models';
 import { OpenTelemetryLoggingOptions } from '../models/logging-options.model';
 import * as assert from 'assert';
 import { InvalidOptionsError } from '../../core/errors/invalid-options.error';
 import { LogRecordExporter } from '@opentelemetry/sdk-logs';
 
 export interface IOpenTelemetryLoggingOptionsBuilder
-    extends OptionsBuilder<OpenTelemetryLoggingOptions> {
-    withLogRecordExporter(
-        exporter: LogRecordExporter,
-    ): IOpenTelemetryLoggingOptionsBuilder;
+  extends OptionsBuilder<OpenTelemetryLoggingOptions> {
+  withLogRecordExporter(
+    exporter: LogRecordExporter
+  ): this;
 
-    build(): OpenTelemetryLoggingOptions;
+  build(): OpenTelemetryLoggingOptions;
 }
 
 export class OpenTelemetryLoggingOptionsBuilder
-    implements
-        IOpenTelemetryLoggingOptionsBuilder,
-        OptionsBuilder<OpenTelemetryLoggingOptions>
-{
-    private options: Partial<OpenTelemetryLoggingOptions> = {
-        logRecordExporters: [],
-    };
+  implements IOpenTelemetryLoggingOptionsBuilder,
+    OptionsBuilder<OpenTelemetryLoggingOptions> {
+  private options: Partial<OpenTelemetryLoggingOptions> = {
+    logRecordExporters: []
+  };
 
-    public withLogRecordExporter(
-        exporter: LogRecordExporter,
-    ): IOpenTelemetryLoggingOptionsBuilder {
-        this.options.logRecordExporters ??= [];
-        this.options.logRecordExporters.push(exporter);
+  public withLogRecordExporter(
+    exporter: LogRecordExporter
+  ): this {
+    this.options.logRecordExporters ??= [];
+    this.options.logRecordExporters.push(exporter);
 
-        return this;
+    return this;
+  }
+
+  public $if(condition: boolean, fn: OptionsBuilderFn<this>): this {
+    if (condition) {
+      fn(this);
     }
 
-    public build(): OpenTelemetryLoggingOptions {
-        const options = this.options;
-        this.assertIsValidConfig(options);
+    return this;
+  }
 
-        this.options = options;
-        return options;
-    }
+  public build(): OpenTelemetryLoggingOptions {
+    const options = this.options;
+    this.assertIsValidConfig(options);
 
-    private assertIsValidConfig(
-        config: Partial<OpenTelemetryLoggingOptions>,
-    ): asserts config is OpenTelemetryLoggingOptions {
-        assert.ok(
-            !!config.logRecordExporters?.length,
-            new InvalidOptionsError(
-                'At least one log record exporter is required.',
-            ),
-        );
-    }
+    this.options = options;
+    return options;
+  }
+
+  private assertIsValidConfig(
+    config: Partial<OpenTelemetryLoggingOptions>
+  ): asserts config is OpenTelemetryLoggingOptions {
+    assert.ok(
+      !!config.logRecordExporters?.length,
+      new InvalidOptionsError(
+        'At least one log record exporter is required.'
+      )
+    );
+  }
 }
