@@ -9,11 +9,14 @@
     "@opentelemetry/instrumentation-mysql": "^0.36.0",
     "@opentelemetry/instrumentation-nestjs-core": "^0.35.0",
     "@opentelemetry/instrumentation-winston": "^0.35.0",
+    "@opentelemetry/sdk-logs": "^0.49.1",
     "@opentelemetry/sdk-metrics": "^1.22.0",
     "@opentelemetry/sdk-trace-base": "^1.22.0",
+    "@zonneplan/open-telemetry-nest": "^1.0.0",
     "@zonneplan/open-telemetry-node": "^1.0.0",
     "opentelemetry-instrumentation-kafkajs": "^0.40.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "winston": "^3.12.0"
   },
   "repository": {
     "type": "git",

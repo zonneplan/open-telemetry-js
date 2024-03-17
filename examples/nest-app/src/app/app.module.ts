@@ -1,12 +1,13 @@
-import { Module } from '@nestjs/common';
+import {Module} from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { PrometheusMetricsController } from '@zonneplan/open-telemetry-nest';
-import { MetricsProvider } from '../providers/metrics.provider';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {PrometheusMetricsController} from '@zonneplan/open-telemetry-nest';
+import {MetricsProvider} from '../providers/metrics.provider';
+import {LoggerModule} from "@zonneplan/open-telemetry-zonneplan";
 
 @Module({
-  imports: [],
+  imports: [LoggerModule],
   /**
    * When using the OTEL collector, for instance by using the OTLPMetricExporter,
    * we don't need to provide a controller here. This is just an easy way to debug/easily view the metrics.

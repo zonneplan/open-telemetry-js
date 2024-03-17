@@ -4,11 +4,12 @@
 import otel = require('@zonneplan/open-telemetry-node');
 import nest = require('@zonneplan/open-telemetry-nest');
 import zonneplan = require('@zonneplan/open-telemetry-zonneplan');
-import { Logger } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import {Logger} from '@nestjs/common';
+import {NestFactory} from '@nestjs/core';
 
-import { AppModule } from './app/app.module';
+import {AppModule} from './app/app.module';
 import * as process from 'node:process';
+import {LoggerFactory} from "@zonneplan/open-telemetry-zonneplan";
 
 new otel.OpenTelemetryBuilder('nest-example')
   .withTracing(zonneplan.DefaultTracingOptions)
@@ -19,10 +20,12 @@ new otel.OpenTelemetryBuilder('nest-example')
       metricsOptions.withMetricReader(new nest.PrometheusNestExporter())
     )
   )
+  // .withDebugLogging()
   .start();
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const logger = new LoggerFactory().create('nest-app');
+  const app = await NestFactory.create(AppModule, {logger});
   app.enableShutdownHooks();
 
   const port = process.env['PORT'] || 3000;
