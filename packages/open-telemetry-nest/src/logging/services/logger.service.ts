@@ -1,4 +1,6 @@
-﻿import { LoggerService as NestLoggerService } from '@nestjs/common/services/logger.service';
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { LoggerService as NestLoggerService } from '@nestjs/common/services/logger.service';
 import { LogLevel } from '@nestjs/common';
 
 export abstract class LoggerService implements NestLoggerService {

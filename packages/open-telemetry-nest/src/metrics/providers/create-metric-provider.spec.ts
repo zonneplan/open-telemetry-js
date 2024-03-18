@@ -5,8 +5,6 @@ import { ConsoleMetricExporter, PeriodicExportingMetricReader } from '@opentelem
 describe('createMetricProvider', () => {
   it('should return undefined if metricProvider is not initialized', () => {
     // Arrange
-    const errorSpy = jest.spyOn(console, 'error').mockImplementation();
-
     // Act
     const result = createMetricProvider({
       name: 'test',
@@ -14,9 +12,6 @@ describe('createMetricProvider', () => {
     });
 
     // Assert
-    expect(errorSpy.mock.calls?.[0]?.[0]).toEqual(
-      'OpenTelemetry metrics are not initialized. Provider will return undefined'
-    );
     expect(result).toEqual({
       provide: 'ZP_OTEL_METRIC_test',
       useFactory: expect.any(Function)

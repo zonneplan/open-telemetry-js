@@ -1,4 +1,6 @@
-﻿import { LogLevel } from '@nestjs/common';
+﻿/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { LogLevel } from '@nestjs/common';
 import { Logger } from 'winston';
 import { GlobalProviders } from '@zonneplan/open-telemetry-node';
 import { SeverityNumber } from '@opentelemetry/api-logs';

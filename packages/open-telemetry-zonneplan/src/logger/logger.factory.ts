@@ -1,5 +1,5 @@
 ﻿import { createLogger, format, LoggerOptions as WinstonLoggerOptions, transports } from 'winston';
-import { yellow } from 'chalk';
+import yellow from 'chalk';
 import { LogLevel } from '@nestjs/common';
 import { NestWinstonLoggerAdapter } from '@zonneplan/open-telemetry-nest';
 
