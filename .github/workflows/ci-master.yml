@@ -1,12 +1,9 @@
-name: '[PR] Lint / Test / Build'
+name: '[MASTER] Lint / Test / Build'
 
 on:
-  pull_request:
-    paths-ignore:
-      - '**/*.md'
-      - '.git-hooks/**'
-      - '.vscode/**'
-      - '.tools/**'
+  push:
+    branches:
+      - master
 
 jobs:
   main:
@@ -52,10 +49,10 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npx nx affected --target=lint --parallel=8 --exclude=@zonneplan/open-telemetry-js
+        run: npx nx run-many --target=lint --parallel=8 --exclude=@zonneplan/open-telemetry-js
 
       - name: Run tests
-        run: npx nx affected --target=test --parallel=8 --ci --exclude=@zonneplan/open-telemetry-js
+        run: npx nx run-many --target=test --parallel=8 --ci --exclude=@zonneplan/open-telemetry-js
 
       - name: Build
-        run: npx nx affected --target=build --parallel=8 --exclude=@zonneplan/open-telemetry-js
+        run: npx nx run-many --target=build --parallel=8 --exclude=@zonneplan/open-telemetry-js
