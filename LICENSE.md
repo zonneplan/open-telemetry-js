@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 Strazz1337, rtuin
+Copyright (c) 2024 Kevin Boonstra, Richard Tuin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
