@@ -3,7 +3,7 @@ name: '[MAIN] Lint / Test / Build'
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   main:
