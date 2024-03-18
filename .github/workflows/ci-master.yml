@@ -1,4 +1,4 @@
-name: '[MASTER] Lint / Test / Build'
+name: '[MAIN] Lint / Test / Build'
 
 on:
   push:
