@@ -1,1 +1,2 @@
-export class InvalidOptionsError extends Error {}
+export class InvalidOptionsError extends Error {
+}

@@ -5,10 +5,10 @@ export interface OptionsBuilder<T> {
 }
 
 export type OptionsBuilderOptions<
-    TBuilder extends OptionsBuilder<TOptions>,
-    TOptions extends object,
+  TBuilder extends OptionsBuilder<TOptions>,
+  TOptions extends object,
 > = TOptions | OptionsBuilderFn<TBuilder>;
 
 export type OptionsBuilderFn<TBuilder> = (
-    options: Omit<TBuilder, 'build'>,
+  options: Omit<TBuilder, 'build'>
 ) => void;

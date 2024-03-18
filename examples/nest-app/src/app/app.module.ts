@@ -1,10 +1,10 @@
-import {Module} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 
-import {AppController} from './app.controller';
-import {AppService} from './app.service';
-import {PrometheusMetricsController} from '@zonneplan/open-telemetry-nest';
-import {MetricsProvider} from '../providers/metrics.provider';
-import {LoggerModule} from "@zonneplan/open-telemetry-zonneplan";
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { PrometheusMetricsController } from '@zonneplan/open-telemetry-nest';
+import { MetricsProvider } from '../providers/metrics.provider';
+import { LoggerModule } from '@zonneplan/open-telemetry-zonneplan';
 
 @Module({
   imports: [LoggerModule],

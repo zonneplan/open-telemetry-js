@@ -5,7 +5,7 @@ import { SpanStatus, SpanStatusCode, trace } from '@opentelemetry/api';
  * @param status
  */
 export const setSpanStatus = (status: SpanStatus) => {
-    trace.getActiveSpan()?.setStatus(status);
+  trace.getActiveSpan()?.setStatus(status);
 };
 
 /**
@@ -13,11 +13,11 @@ export const setSpanStatus = (status: SpanStatus) => {
  * @param message
  */
 export const setSpanOk = (message?: SpanStatus['message']) =>
-    setSpanStatus({ code: SpanStatusCode.OK, message });
+  setSpanStatus({ code: SpanStatusCode.OK, message });
 
 /**
  * Sets span status to ERROR on active span
  * @param message
  */
 export const setSpanError = (message?: SpanStatus['message']) =>
-    setSpanStatus({ code: SpanStatusCode.ERROR, message });
+  setSpanStatus({ code: SpanStatusCode.ERROR, message });

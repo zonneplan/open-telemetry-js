@@ -1,7 +1,7 @@
 // Builders
 export {
-    type IOpenTelemetryTracingOptionsBuilder,
-    OpenTelemetryTracingOptionsBuilder,
+  type IOpenTelemetryTracingOptionsBuilder,
+  OpenTelemetryTracingOptionsBuilder
 } from './builders/open-telemetry-tracing-options.builder';
 
 // Decorators
@@ -15,8 +15,8 @@ export type { SpanOptions } from './models/span-options.model';
 
 // Span
 export {
-    setAttributeOnActiveSpan,
-    setAttributesOnActiveSpan,
+  setAttributeOnActiveSpan,
+  setAttributesOnActiveSpan
 } from './span/set-attributes-on-active-span';
 export { setSpanStatus, setSpanOk, setSpanError } from './span/set-span-status';
 export { startActiveSpan } from './span/start-active-span';

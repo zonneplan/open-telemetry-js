@@ -1,5 +1,5 @@
-﻿import {LoggerService as NestLoggerService} from "@nestjs/common/services/logger.service";
-import {LogLevel} from "@nestjs/common";
+﻿import { LoggerService as NestLoggerService } from '@nestjs/common/services/logger.service';
+import { LogLevel } from '@nestjs/common';
 
 export abstract class LoggerService implements NestLoggerService {
   abstract debug(message: any, ...optionalParams: any[]): any;

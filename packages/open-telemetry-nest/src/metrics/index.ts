@@ -12,9 +12,9 @@ export { PrometheusMetricModule } from './prometheus-metric.module';
 
 // Providers
 export {
-    createMetricProvider,
-    getMetricProvideToken,
-    createCounterProvider,
-    createGaugeProvider,
-    createHistogramProvider,
+  createMetricProvider,
+  getMetricProvideToken,
+  createCounterProvider,
+  createGaugeProvider,
+  createHistogramProvider
 } from './providers/create-metric-provider';

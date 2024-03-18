@@ -1,34 +1,34 @@
-import {OptionsBuilder, OptionsBuilderFn, OptionsBuilderOptions} from '../models/options-builder.models';
+import { OptionsBuilder, OptionsBuilderFn, OptionsBuilderOptions } from '../models/options-builder.models';
 import {
   IOpenTelemetryTracingOptionsBuilder,
   OpenTelemetryTracingOptions,
   OpenTelemetryTracingOptionsBuilder
 } from '../../tracing';
-import {NodeSDK} from '@opentelemetry/sdk-node';
-import {NodeTracerProvider} from '@opentelemetry/sdk-trace-node';
-import {detectResourcesSync, envDetector, IResource, Resource} from '@opentelemetry/resources';
+import { NodeSDK } from '@opentelemetry/sdk-node';
+import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
+import { detectResourcesSync, envDetector, IResource, Resource } from '@opentelemetry/resources';
 import {
   IOpenTelemetryMetricsOptionsBuilder,
   OpenTelemetryMetricsOptions,
   OpenTelemetryMetricsOptionsBuilder
 } from '../../metrics';
-import {MeterProvider} from '@opentelemetry/sdk-metrics';
-import {collectDefaultMetrics as collectDefaultPrometheusMetrics} from 'prom-client';
-import {MetricProvider} from '../../metrics/providers/metric.provider';
-import {BatchLogRecordProcessor, LoggerProvider} from '@opentelemetry/sdk-logs';
-import {diag, DiagConsoleLogger, DiagLogLevel} from '@opentelemetry/api';
+import { MeterProvider } from '@opentelemetry/sdk-metrics';
+import { collectDefaultMetrics as collectDefaultPrometheusMetrics } from 'prom-client';
+import { MetricProvider } from '../../metrics/providers/metric.provider';
+import { BatchLogRecordProcessor, LoggerProvider } from '@opentelemetry/sdk-logs';
+import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
 import {
   IOpenTelemetryLoggingOptionsBuilder,
   OpenTelemetryLoggingOptions,
   OpenTelemetryLoggingOptionsBuilder
 } from '../../logging';
-import {logs} from '@opentelemetry/api-logs';
-import {CompositeLogRecordExporter} from '../../logging/exporters/composite-log-record.exporter';
-import {GlobalProviders} from '../../globals';
+import { logs } from '@opentelemetry/api-logs';
+import { CompositeLogRecordExporter } from '../../logging/exporters/composite-log-record.exporter';
+import { GlobalProviders } from '../../globals';
 import {
   SEMRESATTRS_SERVICE_NAME
 } from '@opentelemetry/semantic-conventions/build/src/resource/SemanticResourceAttributes';
-import {Entries} from '../types/entries.type';
+import { Entries } from '../types/entries.type';
 
 export interface IOpenTelemetryBuilder {
   withDebugLogging(): this;
@@ -267,7 +267,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     options: TOptions | undefined,
     overrides: Partial<TOptions>
   ): TOptions {
-    const merged = {...options};
+    const merged = { ...options };
 
     for (const [key, value] of Object.entries(overrides) as Entries<TOptions>) {
       // @ts-expect-error - we know that the key is a key of TOptions

@@ -1,8 +1,8 @@
-﻿import {LogLevel} from '@nestjs/common';
-import {Logger} from 'winston';
-import {GlobalProviders} from "@zonneplan/open-telemetry-node";
-import {SeverityNumber} from '@opentelemetry/api-logs';
-import {LoggerService} from "../services/logger.service";
+﻿import { LogLevel } from '@nestjs/common';
+import { Logger } from 'winston';
+import { GlobalProviders } from '@zonneplan/open-telemetry-node';
+import { SeverityNumber } from '@opentelemetry/api-logs';
+import { LoggerService } from '../services/logger.service';
 
 /**
  * @see https://github.com/winstonjs/winston?tab=readme-ov-file#logging
@@ -13,7 +13,7 @@ const NEST_LOG_LEVEL_WINSTON_SEVERITY: Record<LogLevel, number> = {
   warn: 1,
   log: 2,
   verbose: 4,
-  debug: 5,
+  debug: 5
 };
 
 const SEVERITY_TEXT_TO_NEST_LOG_LEVEL: Record<string, LogLevel> = {
@@ -51,7 +51,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
   private instrumentationScopeName: string | undefined;
 
   public constructor(private readonly logger: Logger) {
-    super()
+    super();
   }
 
   public override log(message: any, ...optionalParams: any[]) {
@@ -88,7 +88,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     this.instrumentationScopeName = context;
     this.logger.defaultMeta = {
       ...this.logger.defaultMeta,
-      context,
+      context
     };
   }
 

@@ -2,8 +2,8 @@ import { Counter, Histogram } from '@opentelemetry/api';
 
 // Builders
 export {
-    type IOpenTelemetryMetricsOptionsBuilder,
-    OpenTelemetryMetricsOptionsBuilder,
+  type IOpenTelemetryMetricsOptionsBuilder,
+  OpenTelemetryMetricsOptionsBuilder
 } from './builders/open-telemetry-metrics-options.builder';
 
 // Decorators
@@ -17,7 +17,7 @@ export { getOrCreateMetric } from './metrics/get-or-create-metric';
 // Models
 export type { OpenTelemetryMetricsOptions } from './models/metrics-options.model';
 export type {
-    MetricOptions,
-    MetricType,
-    Metrics,
+  MetricOptions,
+  MetricType,
+  Metrics
 } from './models/metric-options.model';

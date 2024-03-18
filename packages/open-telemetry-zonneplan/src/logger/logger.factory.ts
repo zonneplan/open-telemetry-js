@@ -1,7 +1,7 @@
-﻿import {createLogger, format, LoggerOptions as WinstonLoggerOptions, transports,} from 'winston';
-import {yellow} from 'chalk';
-import {LogLevel} from '@nestjs/common';
-import {NestWinstonLoggerAdapter} from "@zonneplan/open-telemetry-nest";
+﻿import { createLogger, format, LoggerOptions as WinstonLoggerOptions, transports } from 'winston';
+import { yellow } from 'chalk';
+import { LogLevel } from '@nestjs/common';
+import { NestWinstonLoggerAdapter } from '@zonneplan/open-telemetry-nest';
 
 export interface LoggerOptions {
   context?: string;
@@ -17,16 +17,16 @@ export class LoggerFactory {
   public create(options?: Partial<LoggerOptions>): NestWinstonLoggerAdapter;
   public create(contextOrOptions?: string | Partial<LoggerOptions>): NestWinstonLoggerAdapter {
     let options = typeof contextOrOptions === 'string'
-      ? {context: contextOrOptions}
+      ? { context: contextOrOptions }
       : contextOrOptions;
 
     options ??= {};
-    
+
     const loggerOptions: WinstonLoggerOptions = {
       defaultMeta: {
         context: options.context ?? 'unknown',
         service: process.env['DD_SERVICE'], // Service in Datadog
-        env: process.env['DD_ENV'], // Environment in Datadog
+        env: process.env['DD_ENV'] // Environment in Datadog
       },
       level: options.level?.toString() ?? process.env['LOG_LEVEL'] ?? 'info',
       format: this._useJsonFormat
@@ -35,7 +35,7 @@ export class LoggerFactory {
           format.timestamp(),
           format.colorize(),
           format.printf(
-            ({level, message, timestamp, ...meta}) => {
+            ({ level, message, timestamp, ...meta }) => {
               let context = meta['context']
                 ? meta['context']
                 : 'unknown';
@@ -44,12 +44,12 @@ export class LoggerFactory {
               delete meta['context']; // remove context from meta dump in log
 
               return `${timestamp} ${level} ${context}: ${message} ${JSON.stringify(
-                meta,
+                meta
               )}`;
-            },
-          ),
+            }
+          )
         ),
-      transports: [new transports.Console()],
+      transports: [new transports.Console()]
     };
 
     return new NestWinstonLoggerAdapter(createLogger(loggerOptions));

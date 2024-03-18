@@ -1,5 +1,5 @@
 // Builders
 export {
-    type IOpenTelemetryBuilder,
-    OpenTelemetryBuilder,
+  type IOpenTelemetryBuilder,
+  OpenTelemetryBuilder
 } from './builders/open-telemetry.builder';

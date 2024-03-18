@@ -1,7 +1,7 @@
 // Builders
 export {
-    type IOpenTelemetryLoggingOptionsBuilder,
-    OpenTelemetryLoggingOptionsBuilder,
+  type IOpenTelemetryLoggingOptionsBuilder,
+  OpenTelemetryLoggingOptionsBuilder
 } from './builders/open-telemetry-logging-options.builder';
 
 // Models
