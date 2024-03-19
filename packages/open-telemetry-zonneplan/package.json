@@ -1,6 +1,6 @@
 {
   "name": "@zonneplan/open-telemetry-zonneplan",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "dependencies": {
     "@nestjs/common": "^10.3.4",
     "@opentelemetry/auto-instrumentations-node": "^0.43.0",
@@ -12,8 +12,8 @@
     "@opentelemetry/instrumentation-winston": "^0.35.0",
     "@opentelemetry/sdk-metrics": "^1.22.0",
     "@opentelemetry/sdk-trace-base": "^1.22.0",
-    "@zonneplan/open-telemetry-nest": "^1.0.0",
-    "@zonneplan/open-telemetry-node": "^1.0.0",
+    "@zonneplan/open-telemetry-nest": "^0.1.0",
+    "@zonneplan/open-telemetry-node": "^0.1.0",
     "chalk": "^4.1.2",
     "opentelemetry-instrumentation-kafkajs": "^0.40.0",
     "tslib": "^2.3.0",
