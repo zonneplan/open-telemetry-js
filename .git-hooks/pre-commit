@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# TODO: Enable format:check, but using statements must first be supported
+#npx nx format:check
+npx nx affected --target=lint --parallel=8 --exclude=@zonneplan/open-telemetry-js
+npx nx affected --target=test --parallel=8 --ci --exclude=@zonneplan/open-telemetry-js
+npx nx affected --target=build --parallel=8 --exclude=@zonneplan/open-telemetry-js

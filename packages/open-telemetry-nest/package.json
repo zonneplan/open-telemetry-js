@@ -1,0 +1,27 @@
+{
+  "name": "@zonneplan/open-telemetry-nest",
+  "version": "0.1.0",
+  "dependencies": {
+    "@nestjs/common": "^10.3.3",
+    "@opentelemetry/api-logs": "^0.49.1",
+    "@opentelemetry/exporter-prometheus": "^0.49.1",
+    "@opentelemetry/sdk-metrics": "^1.22.0",
+    "@zonneplan/open-telemetry-node": "^0.1.0",
+    "prom-client": "^15.1.0",
+    "tslib": "^2.3.0",
+    "winston": "^3.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zonneplan/open-telemetry-js.git"
+  },
+  "type": "commonjs",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "devDependencies": {
+    "jest-mock-extended": "^3.0.5"
+  }
+}

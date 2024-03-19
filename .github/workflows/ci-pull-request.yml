@@ -1,0 +1,61 @@
+name: '[PR] Lint / Test / Build'
+
+on:
+  pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - '.git-hooks/**'
+      - '.vscode/**'
+      - '.tools/**'
+
+jobs:
+  main:
+    name: Initialize the npm cache and install dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set Nx cache key
+        id: nx-cache-key
+        run: echo "KEY=${{ runner.os }}-nx-${{ hashFiles('**/package-lock.json') }}" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com/
+          cache: npm
+
+      - name: Restore Nx cache
+        uses: actions/cache/restore@v3
+        id: nx-cache # use this to check for `cache-hit` ==> if: steps.nx-cache.outputs.cache-hit != 'true'
+        with:
+          path: .nx/cache/
+          key: ${{ env.KEY }}
+          restore-keys: |
+            ${{ env.KEY }}
+            Linux-nx-
+        env:
+          KEY: ${{ steps.nx-cache-key.outputs.KEY }}
+
+      - name: Set shas
+        uses: nrwl/nx-set-shas@v4
+        if: ${{ !env.ACT }}
+        with:
+          main-branch-name: main
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npx nx affected --target=lint --parallel=8 --exclude=@zonneplan/open-telemetry-js
+
+      - name: Run tests
+        run: npx nx affected --target=test --parallel=8 --ci --exclude=@zonneplan/open-telemetry-js
+
+      - name: Build
+        run: npx nx affected --target=build --parallel=8 --exclude=@zonneplan/open-telemetry-js
