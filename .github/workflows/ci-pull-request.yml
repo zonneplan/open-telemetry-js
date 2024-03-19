@@ -46,7 +46,7 @@ jobs:
         uses: nrwl/nx-set-shas@v4
         if: ${{ !env.ACT }}
         with:
-          main-branch-name: master
+          main-branch-name: main
 
       - name: Install dependencies
         run: npm ci
