@@ -5,6 +5,7 @@ import { Logger } from 'winston';
 import { GlobalProviders } from '@zonneplan/open-telemetry-node';
 import { SeverityNumber } from '@opentelemetry/api-logs';
 import { LoggerService } from '../services/logger.service';
+import { context } from '@opentelemetry/api';
 
 /**
  * @see https://github.com/winstonjs/winston?tab=readme-ov-file#logging
@@ -101,7 +102,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
   public override setLogLevels(_: LogLevel[]): any {
     // ignored
   }
-
+  
   private emitLog(
     severityNumber: SeverityNumber,
     body: any,
@@ -134,7 +135,8 @@ export class NestWinstonLoggerAdapter extends LoggerService {
       severityNumber,
       body,
       severityText,
-      attributes
+      attributes,
+      context: context.active()
     });
   }
 }
