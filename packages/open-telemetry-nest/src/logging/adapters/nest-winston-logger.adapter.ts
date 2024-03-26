@@ -3,7 +3,7 @@
 import { LogLevel } from '@nestjs/common';
 import { Logger } from 'winston';
 import { GlobalProviders } from '@zonneplan/open-telemetry-node';
-import { SeverityNumber } from '@opentelemetry/api-logs';
+import { LogAttributes, SeverityNumber } from '@opentelemetry/api-logs';
 import { LoggerService } from '../services/logger.service';
 import { context } from '@opentelemetry/api';
 
@@ -58,12 +58,10 @@ export class NestWinstonLoggerAdapter extends LoggerService {
   }
 
   public override log(message: any, ...optionalParams: any[]) {
-    this.logger.info(message, ...optionalParams);
     this.emitLog(SeverityNumber.INFO, message, ...optionalParams);
   }
 
   public override error(message: any, ...optionalParams: any[]) {
-    this.logger.error(message, ...optionalParams);
     this.emitLog(SeverityNumber.ERROR, message, ...optionalParams);
   }
 
@@ -73,7 +71,6 @@ export class NestWinstonLoggerAdapter extends LoggerService {
   }
 
   public override debug(message: any, ...optionalParams: any[]) {
-    this.logger.debug(message, ...optionalParams);
     this.emitLog(SeverityNumber.DEBUG, message, ...optionalParams);
   }
 
@@ -83,7 +80,6 @@ export class NestWinstonLoggerAdapter extends LoggerService {
   }
 
   public override fatal(message: any, ...optionalParams: any[]) {
-    this.logger.log('fatal', message, ...optionalParams);
     this.emitLog(SeverityNumber.FATAL, message, ...optionalParams);
   }
 
@@ -102,16 +98,15 @@ export class NestWinstonLoggerAdapter extends LoggerService {
   public override setLogLevels(_: LogLevel[]): any {
     // ignored
   }
-  
+
   private emitLog(
     severityNumber: SeverityNumber,
     body: any,
     ...optionalParams: any[]
   ): void {
-    const attributes =
-      optionalParams[0] && typeof optionalParams[0] === 'object'
-        ? optionalParams[0]
-        : {};
+    const { context: contextName, attributes } = this.getContextAndAttributes(
+      optionalParams
+    );
 
     let severityText =
       this.severityNumberToSeverityTextMap[severityNumber] ??
@@ -126,6 +121,13 @@ export class NestWinstonLoggerAdapter extends LoggerService {
       return;
     }
 
+    if (contextName) {
+      this.setContext(contextName);
+    }
+
+    const winstonLogLevel = this.toWinstonLogLevel(nestLogLevel);
+    this.logger[winstonLogLevel](body, attributes);
+    
     if (!GlobalProviders.logProvider) {
       console.error('OpenTelemetry log provider not initialized');
       return;
@@ -138,5 +140,45 @@ export class NestWinstonLoggerAdapter extends LoggerService {
       attributes,
       context: context.active()
     });
+  }
+
+  /**
+   * Takes the first index to decide what the context or attributes are
+   *  - if the first index is an object, it is assumed to be the attributes
+   *  - if the first index is a string, it is assumed to be the context (see the NestJS implementation)
+   * @note we currently only support one parameter
+   * @see https://github.com/nestjs/nest/blob/master/packages/common/services/console-logger.service.ts#L295
+   * @private
+   */
+  private getContextAndAttributes(params: unknown[]): {
+    context: string | undefined;
+    attributes: LogAttributes;
+  } {
+    const param = params[0];
+    if (!param) {
+      return { context: undefined, attributes: {} };
+    }
+
+    if (typeof param === 'string') {
+      return { context: param, attributes: {} };
+    }
+
+    if (typeof param === 'object') {
+      return { context: undefined, attributes: param as LogAttributes };
+    }
+
+    return { context: undefined, attributes: {} };
+  }
+
+  private toWinstonLogLevel(level: LogLevel) {
+    if (level === 'fatal') {
+      return 'error';
+    }
+
+    if (level === 'log') {
+      return 'info';
+    }
+
+    return level;
   }
 }
