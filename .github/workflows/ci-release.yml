@@ -40,10 +40,6 @@ jobs:
       - name: Bump version package
         run: npx nx run ${{ github.event.inputs.package }}:version
 
-      - name: Commit version bump
-        run: |
-          git push
-
       - name: Tag latest
         run: |
           git tag -f latest
