@@ -1,0 +1,58 @@
+apiVersion: 1
+datasources:
+  - name: Loki
+    uid: loki_uid
+    type: loki
+    access: proxy
+    orgId: 1
+    url: http://loki:3100
+    basicAuth: false
+    isDefault: true
+    version: 1
+    editable: false
+    jsonData:
+      derivedFields:
+        - datasourceUid: tempo_uid
+          name: trace_id
+          urlDisplayLabel: View Trace
+          url: '$${__value.raw}'
+          matcherType: label
+          matcherRegex: traceid
+
+  - name: Tempo
+    uid: tempo_uid
+    type: tempo
+    access: proxy
+    orgId: 1
+    url: http://tempo:3200
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: false
+    jsonData:
+      serviceMap:
+        datasourceUid: prometheus_uid
+      nodeGraph:
+        enabled: true
+      tracesToLogsV2:
+        datasourceUid: loki_uid
+        filterByTraceID: true
+        filterBySpanID: false
+        spanStartTimeShift: '-1h'
+        spanEndTimeShift: '1h'
+
+  - name: Prometheus
+    uid: prometheus_uid
+    type: prometheus
+    access: proxy
+    orgId: 1
+    url: http://prometheus:9090
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: false
+    jsonData:
+      httpMethod: POST
+      manageAlerts: true
+      prometheusType: Prometheus
+      disableRecordingRules: false
