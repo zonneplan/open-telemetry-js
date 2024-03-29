@@ -1,6 +1,4 @@
-﻿/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { LogLevel } from '@nestjs/common';
+﻿import { LogLevel } from '@nestjs/common';
 import { Logger } from 'winston';
 import { GlobalProviders } from '@zonneplan/open-telemetry-node';
 import { LogAttributes, SeverityNumber } from '@opentelemetry/api-logs';
@@ -31,27 +29,27 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     super();
   }
 
-  public override log(message: any, ...optionalParams: any[]) {
+  public override log(message: string, ...optionalParams: [string | object]) {
     this.emitLog(SeverityNumber.INFO, message, ...optionalParams);
   }
 
-  public override error(message: any, ...optionalParams: any[]) {
+  public override error(message: string, ...optionalParams: [string | object]) {
     this.emitLog(SeverityNumber.ERROR, message, ...optionalParams);
   }
 
-  public override warn(message: any, ...optionalParams: any[]) {
+  public override warn(message: string, ...optionalParams: [string | object]) {
     this.emitLog(SeverityNumber.WARN, message, ...optionalParams);
   }
 
-  public override debug(message: any, ...optionalParams: any[]) {
+  public override debug(message: string, ...optionalParams: [string | object]) {
     this.emitLog(SeverityNumber.DEBUG, message, ...optionalParams);
   }
 
-  public override verbose(message: any, ...optionalParams: any[]) {
+  public override verbose(message: string, ...optionalParams: [string | object]) {
     this.emitLog(SeverityNumber.UNSPECIFIED, message, ...optionalParams);
   }
 
-  public override fatal(message: any, ...optionalParams: any[]) {
+  public override fatal(message: string, ...optionalParams: [string | object]) {
     this.emitLog(SeverityNumber.FATAL, message, ...optionalParams);
   }
 
@@ -67,14 +65,14 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     return NEST_LOG_LEVEL_WINSTON_SEVERITY[level] <= this.winstonLogLevel;
   }
 
-  public override setLogLevels(_: LogLevel[]): any {
+  public override setLogLevels(_: LogLevel[]) {
     // ignored
   }
 
   private emitLog(
     severityNumber: SeverityNumber,
-    body: any,
-    ...optionalParams: any[]
+    body: string,
+    ...optionalParams: [string | object]
   ): void {
     const { context: contextName, attributes } = this.getContextAndAttributes(
       optionalParams
@@ -122,7 +120,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
    * @see https://github.com/nestjs/nest/blob/master/packages/common/services/console-logger.service.ts#L295
    * @private
    */
-  private getContextAndAttributes(params: unknown[]): {
+  private getContextAndAttributes(params: [string | object]): {
     context: string | undefined;
     attributes: LogAttributes;
   } {
