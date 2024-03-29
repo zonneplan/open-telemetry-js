@@ -38,7 +38,7 @@ jobs:
         run: npm ci
 
       - name: Bump version package
-        run: nx run ${{ github.event.inputs.package }}:version
+        run: npx nx run ${{ github.event.inputs.package }}:version
 
       - name: Tag latest
         run: |
@@ -48,4 +48,4 @@ jobs:
       - name: Publish package
         run: |
           echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}' > ~/.npmrc
-          nx run ${{ github.event.inputs.package }}:publish
+          npx nx run ${{ github.event.inputs.package }}:publish
