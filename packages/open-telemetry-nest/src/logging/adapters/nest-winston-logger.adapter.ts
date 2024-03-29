@@ -6,20 +6,14 @@ import { GlobalProviders } from '@zonneplan/open-telemetry-node';
 import { LogAttributes, SeverityNumber } from '@opentelemetry/api-logs';
 import { LoggerService } from '../services/logger.service';
 import { context } from '@opentelemetry/api';
-import { NEST_LOG_LEVEL_WINSTON_SEVERITY, SEVERITY_TEXT_TO_NEST_LOG_LEVEL } from '../constants';
+import {
+  NEST_LOG_LEVEL_WINSTON_SEVERITY,
+  SEVERITY_NUMBER_TO_TEXT_MAP,
+  SEVERITY_TEXT_TO_NEST_LOG_LEVEL
+} from '../constants';
 
 
 export class NestWinstonLoggerAdapter extends LoggerService {
-  private severityNumberToSeverityTextMap: Record<number, string> = {
-    [SeverityNumber.UNSPECIFIED]: 'UNSPECIFIED',
-    [SeverityNumber.TRACE]: 'TRACE',
-    [SeverityNumber.DEBUG]: 'DEBUG',
-    [SeverityNumber.INFO]: 'INFO',
-    [SeverityNumber.WARN]: 'WARN',
-    [SeverityNumber.ERROR]: 'ERROR',
-    [SeverityNumber.FATAL]: 'FATAL'
-  };
-
   // Winston uses 'log' for 'info' level
   private processLogLevel: LogLevel | undefined =
     process.env['LOG_LEVEL'] === 'info'
@@ -89,8 +83,8 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     );
 
     let severityText =
-      this.severityNumberToSeverityTextMap[severityNumber] ??
-      this.severityNumberToSeverityTextMap[SeverityNumber.UNSPECIFIED];
+      SEVERITY_NUMBER_TO_TEXT_MAP[severityNumber] ??
+      SEVERITY_NUMBER_TO_TEXT_MAP[SeverityNumber.UNSPECIFIED];
 
     if (!severityText) {
       severityText = 'UNSPECIFIED';
