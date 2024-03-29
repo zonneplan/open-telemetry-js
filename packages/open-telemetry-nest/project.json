@@ -18,11 +18,23 @@
         ]
       }
     },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventionalcommits"
+      }
+    },
     "publish": {
-      "command": "node tools/scripts/publish.mjs open-telemetry-nest {args.ver} {args.tag}",
-      "dependsOn": [
-        "build"
-      ]
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/open-telemetry-nest",
+        "commands": [
+          "npm publish"
+        ],
+        "dependsOn": [
+          "build"
+        ]
+      }
     }
   },
   "tags": []

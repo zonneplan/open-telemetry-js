@@ -17,6 +17,24 @@
           "packages/open-telemetry-node/*.md"
         ]
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventionalcommits"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/open-telemetry-node",
+        "commands": [
+          "npm publish"
+        ],
+        "dependsOn": [
+          "build"
+        ]
+      }
     }
   },
   "tags": []

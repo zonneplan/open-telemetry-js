@@ -1,0 +1,51 @@
+name: 'Release package'
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Package to release'
+        required: true
+        type: choice
+        options:
+          - open-telemetry-node
+          - open-telemetry-nest
+          - open-telemetry-zonneplan
+
+jobs:
+  main:
+    name: Release package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Git
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Bump version package
+        run: nx run ${{ github.event.inputs.package }}:version
+
+      - name: Tag latest
+        run: |
+          git tag -f latest
+          git push origin latest
+
+      - name: Publish package
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}' > ~/.npmrc
+          nx run ${{ github.event.inputs.package }}:publish
