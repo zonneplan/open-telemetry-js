@@ -4,6 +4,8 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 ## [0.1.2](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-nest-0.1.1...open-telemetry-nest-0.1.2) (2024-03-29)
 
+## [0.1.2](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-nest-0.1.1...open-telemetry-nest-0.1.2) (2024-03-29)
+
 ## 0.1.0 (2024-03-29)
 
 
