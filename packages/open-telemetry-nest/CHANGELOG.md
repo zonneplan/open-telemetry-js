@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.3](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-nest-0.1.2...open-telemetry-nest-0.1.3) (2024-03-29)
+
+
+### Reverts
+
+* Revert "chore(open-telemetry-nest): release version 0.1.2" ([8c2b979](https://github.com/zonneplan/open-telemetry-js/commit/8c2b979b9f8f5fc365b23fe1d7f2eeda5a850f77))
+
 ## [0.1.2](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-nest-0.1.1...open-telemetry-nest-0.1.2) (2024-03-29)
 
 ## 0.1.0 (2024-03-29)
