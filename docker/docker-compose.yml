@@ -1,28 +1,66 @@
-version: '2'
-name: open-telemetry
+version: '3'
+name: open-telemetry-grafana
 
 services:
-  # Jaeger
-  jaeger-all-in-one:
-    image: jaegertracing/all-in-one:latest
-    ports:
-      - '16686:16686'
-      - '14268'
-      - '14250'
-
-  # Collector
-  otel-collector:
-    image: otel/opentelemetry-collector-contrib:0.92.0
-    command: [ '--config=/etc/otel-collector-config.yaml' ]
+  grafana:
+    image: grafana/grafana:10.4.0-ubuntu
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
     volumes:
-      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+      - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/ds.yaml:ro
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
     ports:
-      - '1888:1888' # pprof extension
-      - '13133:13133' # health_check extension
-      - '4317:4317' # OTLP gRPC receiver
-      - '4318:4318' # OTLP HTTP receiver
-      - '55679:55679' # zpages extension
-      - "8888:8888" # Prometheus metrics exposed by the collector
-      - "8889:8889" # Prometheus exporter metrics
+      - "3000:3000"
     depends_on:
-      - jaeger-all-in-one
+      - prometheus
+      - tempo
+      - loki
+
+  grafana-agent:
+    image: grafana/agent:v0.40.3
+    volumes:
+      - ./grafana-agent/grafana-agent.river:/etc/agent/config.river:ro
+    environment:
+      - AGENT_MODE=flow
+    command:
+      - run
+      - --server.http.listen-addr=0.0.0.0:12345
+      - /etc/agent/config.river
+    ports:
+      - "12345:12345"
+      - 4317:4317
+      - 4318:4318
+    depends_on:
+      - loki
+      - tempo
+      - prometheus
+
+  loki:
+    image: grafana/loki:2.9.5
+    volumes:
+      - ./loki/loki.yaml:/etc/loki/loki.yaml:ro
+    command:
+      - '-config.file=/etc/loki/loki.yaml'
+    ports:
+      - 3100:3100
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-remote-write-receiver'
+    ports:
+      - 9090:9090
+
+  tempo:
+    image: grafana/tempo:latest
+    volumes:
+      - ./tempo/tempo.yaml:/etc/tempo.yaml
+    command:
+      - '-config.file=/etc/tempo.yaml'
+    ports:
+      - 3200:3200
