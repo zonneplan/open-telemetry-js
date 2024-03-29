@@ -6,18 +6,34 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "packages/open-telemetry-node/dist",
         "main": "packages/open-telemetry-node/src/index.ts",
         "tsConfig": "packages/open-telemetry-node/tsconfig.lib.json",
-        "assets": ["packages/open-telemetry-node/*.md"]
+        "assets": [
+          "packages/open-telemetry-node/*.md"
+        ]
       }
     },
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
         "preset": "conventionalcommits"
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/open-telemetry-node",
+        "commands": [
+          "npm publish"
+        ],
+        "dependsOn": [
+          "build"
+        ]
       }
     }
   },
