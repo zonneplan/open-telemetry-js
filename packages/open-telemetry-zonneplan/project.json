@@ -21,7 +21,9 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "preset": "conventionalcommits"
+        "baseBranch": "HEAD:main",
+        "preset": "conventionalcommits",
+        "push": true
       }
     },
     "publish": {
