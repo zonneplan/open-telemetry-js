@@ -1,7 +1,7 @@
 {
   "name": "@zonneplan/open-telemetry-zonneplan",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {
     "@nestjs/common": "^10.3.4",
     "@opentelemetry/auto-instrumentations-node": "^0.43.0",
