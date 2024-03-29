@@ -40,11 +40,6 @@ jobs:
       - name: Bump version package
         run: npx nx run ${{ github.event.inputs.package }}:version
 
-      - name: Tag latest
-        run: |
-          git tag -f latest
-          git push origin latest
-
       - name: Publish package
         run: |
           echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}' > ~/.npmrc
