@@ -40,7 +40,6 @@ export class NestWinstonLoggerAdapter extends LoggerService {
   }
 
   public override warn(message: any, ...optionalParams: any[]) {
-    this.logger.warn(message, ...optionalParams);
     this.emitLog(SeverityNumber.WARN, message, ...optionalParams);
   }
 
@@ -49,7 +48,6 @@ export class NestWinstonLoggerAdapter extends LoggerService {
   }
 
   public override verbose(message: any, ...optionalParams: any[]) {
-    this.logger.verbose(message, ...optionalParams);
     this.emitLog(SeverityNumber.UNSPECIFIED, message, ...optionalParams);
   }
 
