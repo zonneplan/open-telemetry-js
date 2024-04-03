@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.1.5](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-nest-0.1.4...open-telemetry-nest-0.1.5) (2024-04-03)
+
+
+### Bug Fixes
+
+* **open-telemetry-nest:** make logger optional params optional ([0ca0d4a](https://github.com/zonneplan/open-telemetry-js/commit/0ca0d4a61105051daa78770d950d8302bad6b2cd))
+
 ## [0.1.4](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-nest-0.1.3...open-telemetry-nest-0.1.4) (2024-03-29)
 
 ## [0.1.3](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-nest-0.1.2...open-telemetry-nest-0.1.3) (2024-03-29)
