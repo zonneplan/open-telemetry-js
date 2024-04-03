@@ -10,6 +10,7 @@ import {
   SEVERITY_TEXT_TO_NEST_LOG_LEVEL
 } from '../constants';
 
+type OptionalParams = [] | [string | object];
 
 export class NestWinstonLoggerAdapter extends LoggerService {
   // Winston uses 'log' for 'info' level
@@ -29,27 +30,27 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     super();
   }
 
-  public override log(message: string, ...optionalParams: [string | object]) {
+  public override log(message: string, ...optionalParams: OptionalParams) {
     this.emitLog(SeverityNumber.INFO, message, ...optionalParams);
   }
 
-  public override error(message: string, ...optionalParams: [string | object]) {
+  public override error(message: string, ...optionalParams: OptionalParams) {
     this.emitLog(SeverityNumber.ERROR, message, ...optionalParams);
   }
 
-  public override warn(message: string, ...optionalParams: [string | object]) {
+  public override warn(message: string, ...optionalParams: OptionalParams) {
     this.emitLog(SeverityNumber.WARN, message, ...optionalParams);
   }
 
-  public override debug(message: string, ...optionalParams: [string | object]) {
+  public override debug(message: string, ...optionalParams: OptionalParams) {
     this.emitLog(SeverityNumber.DEBUG, message, ...optionalParams);
   }
 
-  public override verbose(message: string, ...optionalParams: [string | object]) {
+  public override verbose(message: string, ...optionalParams: OptionalParams) {
     this.emitLog(SeverityNumber.UNSPECIFIED, message, ...optionalParams);
   }
 
-  public override fatal(message: string, ...optionalParams: [string | object]) {
+  public override fatal(message: string, ...optionalParams: OptionalParams) {
     this.emitLog(SeverityNumber.FATAL, message, ...optionalParams);
   }
 
@@ -72,7 +73,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
   private emitLog(
     severityNumber: SeverityNumber,
     body: string,
-    ...optionalParams: [string | object]
+    ...optionalParams: OptionalParams
   ): void {
     const { context: contextName, attributes } = this.getContextAndAttributes(
       optionalParams
@@ -120,7 +121,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
    * @see https://github.com/nestjs/nest/blob/master/packages/common/services/console-logger.service.ts#L295
    * @private
    */
-  private getContextAndAttributes(params: [string | object]): {
+  private getContextAndAttributes(params: OptionalParams): {
     context: string | undefined;
     attributes: LogAttributes;
   } {
