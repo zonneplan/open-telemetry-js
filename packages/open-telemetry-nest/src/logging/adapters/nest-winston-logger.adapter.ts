@@ -95,13 +95,9 @@ export class NestWinstonLoggerAdapter extends LoggerService {
       optionalParams
     );
 
-    let severityText =
+    const severityText =
       SEVERITY_NUMBER_TO_TEXT_MAP[severityNumber] ??
-      SEVERITY_NUMBER_TO_TEXT_MAP[SeverityNumber.UNSPECIFIED];
-
-    if (!severityText) {
-      severityText = 'UNSPECIFIED';
-    }
+      SEVERITY_NUMBER_TO_TEXT_MAP[SeverityNumber.UNSPECIFIED] ?? 'UNSPECIFIED';
 
     const nestLogLevel = SEVERITY_TEXT_TO_NEST_LOG_LEVEL[severityText];
     if (!nestLogLevel) {
