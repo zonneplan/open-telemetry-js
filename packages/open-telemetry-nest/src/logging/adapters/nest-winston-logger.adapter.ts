@@ -12,22 +12,38 @@ import {
 
 type OptionalParams = [] | [string | object];
 
+/**
+ * Logger adapter for NestJS that uses Winston as the underlying logger.
+ * Supports two types of log level filters via environment variables:
+ *  - LOG_LEVEL -> sets the winston log level for regular logging
+ *  - LOG_LEVEL_OTEL -> sets the log level for emission to OpenTelemetry
+ */
 export class NestWinstonLoggerAdapter extends LoggerService {
-  // Winston uses 'log' for 'info' level
-  private processLogLevel: LogLevel | undefined =
-    process.env['LOG_LEVEL'] === 'info'
-      ? 'log'
-      : (process.env['LOG_LEVEL'] as LogLevel);
+  private static winstonLogLevelNest =
+    this.getCorrectedLogLevel(
+      process.env['LOG_LEVEL'] ?? 'info'
+    );
 
-  private winstonLogLevel =
-    NEST_LOG_LEVEL_WINSTON_SEVERITY[
-    this.processLogLevel ?? ('log' as LogLevel)
-      ];
+  private static otelLogLevelNest =
+    this.getCorrectedLogLevel(
+      process.env['LOG_LEVEL_OTEL'] ?? 'info'
+    );
 
   private instrumentationScopeName: string | undefined;
 
   public constructor(private readonly logger: Logger) {
     super();
+  }
+
+  /**
+   * Nest uses 'log' instead of 'info'
+   */
+  private static getCorrectedLogLevel(logLevel: string): LogLevel {
+    if (logLevel === 'info') {
+      return 'log';
+    }
+
+    return logLevel as LogLevel;
   }
 
   public override log(message: string, ...optionalParams: OptionalParams) {
@@ -62,8 +78,8 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     };
   }
 
-  public override isLevelEnabled(level: LogLevel): boolean {
-    return NEST_LOG_LEVEL_WINSTON_SEVERITY[level] <= this.winstonLogLevel;
+  public override isLevelEnabled(nestLogLevel: LogLevel, maxLogLevel: LogLevel = NestWinstonLoggerAdapter.winstonLogLevelNest): boolean {
+    return NEST_LOG_LEVEL_WINSTON_SEVERITY[nestLogLevel] <= NEST_LOG_LEVEL_WINSTON_SEVERITY[maxLogLevel];
   }
 
   public override setLogLevels(_: LogLevel[]) {
@@ -88,7 +104,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     }
 
     const nestLogLevel = SEVERITY_TEXT_TO_NEST_LOG_LEVEL[severityText];
-    if (!nestLogLevel || !this.isLevelEnabled(nestLogLevel)) {
+    if (!nestLogLevel) {
       return;
     }
 
@@ -96,8 +112,22 @@ export class NestWinstonLoggerAdapter extends LoggerService {
       this.setContext(contextName);
     }
 
-    const winstonLogLevel = this.toWinstonLogLevel(nestLogLevel);
-    this.logger[winstonLogLevel](body, attributes);
+    this.logToWinston(nestLogLevel, body, attributes);
+    this.logToOpenTelemetry(nestLogLevel, severityNumber, severityText, body, attributes);
+  }
+
+  private logToWinston(logLevel: LogLevel, body: string, attributes: LogAttributes) {
+    if (!this.isLevelEnabled(logLevel, NestWinstonLoggerAdapter.winstonLogLevelNest)) {
+      return;
+    }
+
+    this.logger[this.toWinstonLogLevel(logLevel)](body, attributes);
+  }
+
+  private logToOpenTelemetry(logLevel: LogLevel, severityNumber: SeverityNumber, severityText: string, body: string, attributes: LogAttributes) {
+    if (!this.isLevelEnabled(logLevel, NestWinstonLoggerAdapter.otelLogLevelNest)) {
+      return;
+    }
 
     if (!GlobalProviders.logProvider) {
       console.error('OpenTelemetry log provider not initialized');
