@@ -23,8 +23,7 @@
       "options": {
         "baseBranch": "HEAD:main",
         "preset": "conventionalcommits",
-        "push": true,
-        "syncVersions": true
+        "push": true
       }
     },
     "publish": {
