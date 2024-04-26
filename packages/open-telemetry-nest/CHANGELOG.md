@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.1](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-nest-0.2.0...open-telemetry-nest-0.2.1) (2024-04-26)
+
+
+### Bug Fixes
+
+* skip nx dependency checks ver mismatch ([629781a](https://github.com/zonneplan/open-telemetry-js/commit/629781a058fa86b891e66f2b3aecea2e41dc91a8))
+
+
+### Reverts
+
+* Revert "chore: dont run githooks after version bump" ([dc890b0](https://github.com/zonneplan/open-telemetry-js/commit/dc890b023fa6f2687fbf8040284d1428abe17b4f))
+
 ## [0.2.0](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-nest-0.1.5...open-telemetry-nest-0.2.0) (2024-04-26)
 
 
