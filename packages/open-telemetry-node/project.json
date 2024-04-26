@@ -23,7 +23,8 @@
       "options": {
         "baseBranch": "HEAD:main",
         "preset": "conventionalcommits",
-        "push": true
+        "push": true,
+        "noVerify": true
       }
     },
     "publish": {
