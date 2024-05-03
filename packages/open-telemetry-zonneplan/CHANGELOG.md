@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-zonneplan-0.2.0...open-telemetry-zonneplan-0.3.0) (2024-05-03)
+
+
+### Features
+
+* **open-telemetry-zonneplan:** optionally global LoggerModule ([#17](https://github.com/zonneplan/open-telemetry-js/issues/17)) ([e1a31e4](https://github.com/zonneplan/open-telemetry-js/commit/e1a31e45683a896e4ca72c53800235d13d2d1992))
+
 ## [0.2.0](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-zonneplan-0.1.0...open-telemetry-zonneplan-0.2.0) (2024-04-29)
 
 
