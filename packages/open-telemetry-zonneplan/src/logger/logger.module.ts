@@ -1,8 +1,9 @@
-﻿import { Module, Scope } from '@nestjs/common';
+﻿import { DynamicModule, Module, Scope } from '@nestjs/common';
 import { LoggerFactory } from './logger.factory';
 import { LoggerService } from '@zonneplan/open-telemetry-nest';
+import { ModuleMetadata } from '@nestjs/common/interfaces/modules/module-metadata.interface';
 
-@Module({
+const moduleMetadata: ModuleMetadata = {
   providers: [
     {
       provide: LoggerService,
@@ -11,6 +12,15 @@ import { LoggerService } from '@zonneplan/open-telemetry-nest';
     }
   ],
   exports: [LoggerService]
-})
+};
+
+@Module(moduleMetadata)
 export class LoggerModule {
+  public static asGlobal(): DynamicModule {
+    return {
+      global: true,
+      module: LoggerModule,
+      ...moduleMetadata
+    };
+  }
 }
