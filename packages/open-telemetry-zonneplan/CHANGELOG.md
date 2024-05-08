@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-zonneplan-0.3.0...open-telemetry-zonneplan-0.4.0) (2024-05-08)
+
+
+### Features
+
+* **open-telemetry-zonneplan:** support node (0.2.1) and nest (0.3.0) ([0bd5eed](https://github.com/zonneplan/open-telemetry-js/commit/0bd5eedb1c4685d9072916f4d09dd35ce2b6c8cd))
+
 ## [0.3.0](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-zonneplan-0.2.0...open-telemetry-zonneplan-0.3.0) (2024-05-03)
 
 
