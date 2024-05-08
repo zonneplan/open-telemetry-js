@@ -10,6 +10,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import * as process from 'node:process';
 import { LoggerFactory } from '@zonneplan/open-telemetry-zonneplan';
+import { DiagLogLevel } from '@zonneplan/open-telemetry-node';
 
 new otel.OpenTelemetryBuilder('nest-example')
   .withTracing(zonneplan.DefaultTracingOptions)
@@ -20,7 +21,7 @@ new otel.OpenTelemetryBuilder('nest-example')
       metricsOptions.withMetricReader(new nest.PrometheusNestExporter())
     )
   )
-  // .withDebugLogging()
+  .withDiagLogging(DiagLogLevel.WARN)
   .start();
 
 async function bootstrap() {

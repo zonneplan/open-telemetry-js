@@ -31,7 +31,13 @@ import {
 import { Entries } from '../types/entries.type';
 
 export interface IOpenTelemetryBuilder {
+  /**
+   * @deprecated - will likely be removed in v1.0, use {@link withDiagLogging} instead.
+   *  for identical behaviour use `withDiagLogging(DiagLogLevel.DEBUG)`
+   */
   withDebugLogging(): this;
+
+  withDiagLogging(level: DiagLogLevel): this;
 
   withLogging(
     optionsBuilderOrOptions: OptionsBuilderOptions<
@@ -58,19 +64,24 @@ export interface IOpenTelemetryBuilder {
 }
 
 export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
-  private debugLoggingEnabled = false;
+  private diagLogLevel: DiagLogLevel | null = null;
   private loggingOptions?: OpenTelemetryLoggingOptions;
   private metricsOptions?: OpenTelemetryMetricsOptions;
   private tracingOptions?: OpenTelemetryTracingOptions;
-  private resource: IResource;
+  private readonly resource: IResource;
 
   public constructor(private readonly serviceName: string) {
     this.resource = this.getResource();
   }
 
-  public withDebugLogging(): this {
-    this.debugLoggingEnabled = true;
+  withDiagLogging(level: DiagLogLevel): this {
+    this.diagLogLevel = level;
+    return this;
+  }
 
+  /** @inheritdoc */
+  public withDebugLogging(): this {
+    this.diagLogLevel = DiagLogLevel.DEBUG;
     return this;
   }
 
@@ -138,18 +149,18 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   }
 
   public start(): void {
-    this.tryEnableDebugLogging();
+    this.tryEnableDiagLogging();
     this.tryEnableLogging();
     this.tryEnableMetrics();
     this.tryEnableTracing();
   }
 
-  private tryEnableDebugLogging() {
-    if (!this.debugLoggingEnabled) {
+  private tryEnableDiagLogging() {
+    if (!this.diagLogLevel) {
       return;
     }
 
-    diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.DEBUG);
+    diag.setLogger(new DiagConsoleLogger(), this.diagLogLevel);
   }
 
   private tryEnableLogging() {
@@ -170,7 +181,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
       new BatchLogRecordProcessor(compositeLogger)
     );
 
-    if (this.debugLoggingEnabled) {
+    if (this.isAtLeastDebugDiagLogLevel()) {
       console.debug('Logging enabled.');
     }
   }
@@ -193,7 +204,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     const meter = meterProvider.getMeter('@zonneplan/open-telemetry-node');
     GlobalProviders.metricProvider = new MetricProvider(meter);
 
-    if (this.debugLoggingEnabled) {
+    if (this.isAtLeastDebugDiagLogLevel()) {
       console.debug('Metrics enabled.');
     }
   }
@@ -222,7 +233,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
 
     GlobalProviders.tracerProvider.register();
 
-    if (this.debugLoggingEnabled) {
+    if (this.isAtLeastDebugDiagLogLevel()) {
       console.debug('Tracing enabled.');
     }
   }
@@ -275,5 +286,10 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     }
 
     return merged as TOptions;
+  }
+
+  private isAtLeastDebugDiagLogLevel(): boolean {
+    return [DiagLogLevel.DEBUG, DiagLogLevel.VERBOSE, DiagLogLevel.ALL]
+      .includes(this.diagLogLevel ?? DiagLogLevel.NONE);
   }
 }
