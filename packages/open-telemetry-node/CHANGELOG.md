@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.1](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-node-0.2.0...open-telemetry-node-0.2.1) (2024-05-08)
+
+
+### Bug Fixes
+
+* **open-telemetry-node:** removed duplicate trace provider ([#19](https://github.com/zonneplan/open-telemetry-js/issues/19)) ([b164464](https://github.com/zonneplan/open-telemetry-js/commit/b164464ac8b1f90e7effcfaced3ed1b3a71c2f6d))
+
 ## [0.2.0](https://github.com/zonneplan/open-telemetry-js/compare/open-telemetry-node-0.1.0...open-telemetry-node-0.2.0) (2024-05-08)
 
 
