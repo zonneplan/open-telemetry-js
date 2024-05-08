@@ -4,8 +4,6 @@ import {
   OpenTelemetryTracingOptions,
   OpenTelemetryTracingOptionsBuilder
 } from '../../tracing';
-import { NodeSDK } from '@opentelemetry/sdk-node';
-import { NodeTracerProvider } from '@opentelemetry/sdk-trace-node';
 import { detectResourcesSync, envDetector, IResource, Resource } from '@opentelemetry/resources';
 import {
   IOpenTelemetryMetricsOptionsBuilder,
@@ -29,6 +27,7 @@ import {
   SEMRESATTRS_SERVICE_NAME
 } from '@opentelemetry/semantic-conventions/build/src/resource/SemanticResourceAttributes';
 import { Entries } from '../types/entries.type';
+import { NodeSDK } from '@opentelemetry/sdk-node';
 
 export interface IOpenTelemetryBuilder {
   /**
@@ -218,20 +217,11 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
       traceExporter: this.tracingOptions.spanExporter,
       resource: this.resource,
       sampler: this.tracingOptions.sampler,
-      instrumentations: this.tracingOptions.instrumentations
+      instrumentations: this.tracingOptions.instrumentations,
+      spanProcessors: this.tracingOptions.spanProcessors
     });
 
     sdk.start();
-
-    GlobalProviders.tracerProvider = new NodeTracerProvider({
-      resource: this.resource
-    });
-
-    for (const processor of this.tracingOptions.spanProcessors) {
-      GlobalProviders.tracerProvider.addSpanProcessor(processor);
-    }
-
-    GlobalProviders.tracerProvider.register();
 
     if (this.isAtLeastDebugDiagLogLevel()) {
       console.debug('Tracing enabled.');
