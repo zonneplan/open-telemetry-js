@@ -1,9 +1,9 @@
-import { GlobalProviders } from '../../globals';
 import { TRACER_NAME } from '../constants';
+import { trace } from '@opentelemetry/api';
 
 /**
  * Gets the current tracer.
  */
 export function getTracer() {
-  return GlobalProviders.tracerProvider?.getTracer(TRACER_NAME);
+  return trace?.getTracer(TRACER_NAME);
 }

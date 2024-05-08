@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 import { startSpan } from './start-span';
 import { OpenTelemetryBuilder } from '../../core/builders/open-telemetry.builder';
-import { AlwaysOffSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { AlwaysOnSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace-node';
 import { getSpanAttributes, getSpanName } from '../../../testing/util';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -12,7 +12,7 @@ describe('startSpan', () => {
   beforeAll(() => {
     new OpenTelemetryBuilder('test')
       .withTracing(x =>
-        x.withSampler(new AlwaysOffSampler())
+        x.withSampler(new AlwaysOnSampler())
           .withSpanProcessor(_ => new NoopSpanProcessor())
           .withSpanExporter(new InMemorySpanExporter())
       ).start();
