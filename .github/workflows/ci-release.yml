@@ -1,16 +1,7 @@
 name: 'Release package'
 
 on:
-  workflow_dispatch:
-    inputs:
-      package:
-        description: 'Package to release'
-        required: true
-        type: choice
-        options:
-          - open-telemetry-node
-          - open-telemetry-nest
-          - open-telemetry-zonneplan
+  workflow_dispatch
 
 jobs:
   main:
@@ -37,10 +28,30 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Bump version package
-        run: npx nx run ${{ github.event.inputs.package }}:version
+      # Semver creates a tag on the latest commit
+      # But the version bump does not create a new commit yet
+      # Since the post target needs to sync package versions
+      - name: Bump version for packages (synced)
+        run: npx nx run version
 
+      - name: Get created tag
+        id: get_tag
+        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
+
+      - name: Remove tag from last commit
+        run: git tag -d ${{ steps.get_tag.outputs.tag }}
+
+      - name: Commit version bump and tag as latest
+        run: |
+          git add .
+          git commit -m "chore(release): bump version to ${{ steps.get_tag.outputs.tag }}"
+          git tag ${{ steps.get_tag.outputs.tag }}
+
+      # Order matters for the publishing, packages with dependencies should be published last
       - name: Publish package
         run: |
           echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}' > ~/.npmrc
-          npx nx run ${{ github.event.inputs.package }}:publish
+          npx nx run open-telemetry-node:publish
+          npx nx run open-telemetry-nest:publish
+          npx nx run open-telemetry-zonneplan:publish
+
