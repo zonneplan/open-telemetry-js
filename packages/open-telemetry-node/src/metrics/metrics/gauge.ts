@@ -1,41 +1,21 @@
-import { Attributes, ObservableGauge } from '@opentelemetry/api';
-
-type GaugeAttributeVariation = {
-  attributes: Attributes | undefined;
-  value: number;
-};
+import { Attributes, Gauge as OTELGauge } from '@opentelemetry/api';
 
 export class Gauge {
-  private readonly gaugeAttributeVariation = new Map<
-    string,
-    GaugeAttributeVariation
-  >();
-
-  public constructor(private readonly gauge: ObservableGauge<Attributes>) {
-    this.gauge.addCallback((observableResult) => {
-      [...this.gaugeAttributeVariation.values()].forEach(
-        ({ value, attributes }) =>
-          observableResult.observe(value, attributes)
-      );
-    });
+  public constructor(private readonly gauge: OTELGauge<Attributes>) {
   }
 
   public setToCurrentTime(attributes?: Attributes): void {
-    this.set(Date.now() / 1000, attributes);
+    this.record(Date.now() / 1000, attributes);
   }
 
+  /**
+   * @deprecated use {@link record} instead. Will be removed in version 1.0.
+   */
   public set(value: number, attributes?: Attributes): void {
-    const key = attributes ? JSON.stringify(attributes) : '';
-    const gaugeAttributeVariation = this.gaugeAttributeVariation.get(key);
+    this.gauge.record(value, attributes);
+  }
 
-    if (gaugeAttributeVariation) {
-      gaugeAttributeVariation.value = value;
-      return;
-    }
-
-    this.gaugeAttributeVariation.set(key, {
-      attributes,
-      value
-    });
+  public record(value: number, attributes?: Attributes): void {
+    this.gauge.record(value, attributes);
   }
 }

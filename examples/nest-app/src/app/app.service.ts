@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Counter, span, spanAttribute } from '@zonneplan/open-telemetry-node';
+import { Counter, Gauge, span, spanAttribute } from '@zonneplan/open-telemetry-node';
 import { InjectMetric, LoggerService } from '@zonneplan/open-telemetry-nest';
-import { METRICS_APP_CONTROLLER_GET } from '../providers/metrics.provider';
+import { METRICS_APP_CONTROLLER_GET, METRICS_APP_CONTROLLER_LAST_CALLED } from '../providers/metrics.provider';
 
 @Injectable()
 export class AppService {
@@ -11,6 +11,8 @@ export class AppService {
      */
     @InjectMetric(METRICS_APP_CONTROLLER_GET)
     private readonly getCounter: Counter,
+    @InjectMetric(METRICS_APP_CONTROLLER_LAST_CALLED)
+    private readonly lastCalledGauge: Gauge,
     private readonly logger: LoggerService
   ) {
     logger.setContext(this.constructor.name);
@@ -38,6 +40,9 @@ export class AppService {
     message: string
   } {
     this.getCounter.add(1);
+    this.lastCalledGauge.record(Date.now(), {
+      attr: 'test'
+    });
     this.logger.log('getData called', { name, date: date.toISOString() });
 
     return { message: `Hello ${name}, today is ${date.toDateString()}` };

@@ -47,7 +47,7 @@ export class MetricProvider {
   }
 
   private createGauge(name: string, options: OtelMetricOptions): Gauge {
-    const gauge = this.meter.createObservableGauge(name, options);
+    const gauge = this.meter.createGauge(name, options);
     return new Gauge(gauge);
   }
 }
