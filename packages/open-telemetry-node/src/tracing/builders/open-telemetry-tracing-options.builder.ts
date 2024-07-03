@@ -3,7 +3,7 @@ import { Sampler, SpanExporter, SpanProcessor } from '@opentelemetry/sdk-trace-b
 import { OpenTelemetryTracingOptions } from '../models/tracing-options.model';
 import * as assert from 'assert';
 import { InvalidOptionsError } from '../../core/errors/invalid-options.error';
-import { InstrumentationOption } from '@opentelemetry/instrumentation';
+import { Instrumentation } from '@opentelemetry/instrumentation/build/src/types';
 
 export interface IOpenTelemetryTracingOptionsBuilder
   extends OptionsBuilder<OpenTelemetryTracingOptions> {
@@ -14,7 +14,7 @@ export interface IOpenTelemetryTracingOptionsBuilder
   ): this;
 
   withInstrumentation(
-    ...instrumentations: InstrumentationOption[]
+    ...instrumentations: Instrumentation[]
   ): this;
 
   withSpanProcessor(
@@ -52,7 +52,7 @@ export class OpenTelemetryTracingOptionsBuilder
   }
 
   public withInstrumentation(
-    ...instrumentations: InstrumentationOption[]
+    ...instrumentations: Instrumentation[]
   ): this {
     this.options.instrumentations ??= [];
     this.options.instrumentations.push(...instrumentations);

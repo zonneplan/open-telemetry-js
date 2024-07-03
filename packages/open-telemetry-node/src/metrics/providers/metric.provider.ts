@@ -1,6 +1,7 @@
-import { Meter, MetricOptions as OtelMetricOptions } from '@opentelemetry/api';
+import { MetricOptions as OtelMetricOptions } from '@opentelemetry/api';
 import { Gauge } from '../metrics/gauge';
 import { MetricOptions, Metrics, MetricTypeMap } from '../models/metric-options.model';
+import { Meter } from '@opentelemetry/api/build/src/metrics/Meter';
 
 export class MetricProvider {
   private readonly registeredMetrics: Map<string, Metrics> = new Map<

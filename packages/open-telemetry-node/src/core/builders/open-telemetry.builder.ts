@@ -10,7 +10,6 @@ import {
   OpenTelemetryMetricsOptions,
   OpenTelemetryMetricsOptionsBuilder
 } from '../../metrics';
-import { MeterProvider } from '@opentelemetry/sdk-metrics';
 import { collectDefaultMetrics as collectDefaultPrometheusMetrics } from 'prom-client';
 import { MetricProvider } from '../../metrics/providers/metric.provider';
 import { BatchLogRecordProcessor, LoggerProvider } from '@opentelemetry/sdk-logs';
@@ -28,6 +27,7 @@ import {
 } from '@opentelemetry/semantic-conventions/build/src/resource/SemanticResourceAttributes';
 import { Entries } from '../types/entries.type';
 import { NodeSDK } from '@opentelemetry/sdk-node';
+import { MeterProvider } from '@opentelemetry/sdk-metrics';
 
 export interface IOpenTelemetryBuilder {
   /**

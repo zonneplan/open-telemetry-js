@@ -9,7 +9,7 @@ import { OpenTelemetryTracingOptionsBuilder } from '@zonneplan/open-telemetry-no
 
 export const DefaultTracingOptions = new OpenTelemetryTracingOptionsBuilder()
   .withInstrumentation(
-    getNodeAutoInstrumentations({
+    ...getNodeAutoInstrumentations({
       '@opentelemetry/instrumentation-fs': {
         enabled: false
       },
