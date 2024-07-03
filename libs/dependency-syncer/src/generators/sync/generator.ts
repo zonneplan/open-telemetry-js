@@ -1,5 +1,5 @@
 import { Tree, updateJson } from '@nx/devkit';
-import { getNpmPackageVersion } from '@nx/workspace/src/generators/utils/get-npm-package-version';
+import { getPackageJson } from '@nx/eslint-plugin/src/utils/package-json-utils';
 
 type PackageName = 'open-telemetry-nest' | 'open-telemetry-zonneplan' | 'open-telemetry-node';
 
@@ -32,7 +32,7 @@ function syncDepdendencyForPackage(tree: Tree, packageName: PackageName) {
 
 
   const packageIdentifier = getPackageIdentifier(packageName);
-  const currentVersion = getNpmPackageVersion(packageIdentifier);
+  const currentVersion = getPackageJson(getPackagePath(packageName)).version;
 
   if (!currentVersion) {
     console.error(`Could not find version for ${packageIdentifier}`);

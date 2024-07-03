@@ -17,13 +17,18 @@
         "preset": "conventionalcommits",
         "syncVersions": true,
         "skipProjectChangelog": true,
+        "push": false,
+        "skipCommit": true,
         "postTargets": [
           "sync-dependencies"
         ]
       }
     },
     "sync-dependencies": {
-      "executor": "@zonneplan/dependency-syncer:sync"
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx generate @zonneplan/dependency-syncer:sync"
+      }
     }
   }
 }
