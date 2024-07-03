@@ -10,11 +10,7 @@
     "importHelpers": true,
     "target": "es2022",
     "module": "esnext",
-    "lib": [
-      "es2022",
-      "esnext.disposable",
-      "DOM"
-    ],
+    "lib": ["es2022", "esnext.disposable", "DOM"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -33,6 +29,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
+      "@zonneplan/dependency-syncer": ["libs/dependency-syncer/src/index.ts"],
       "@zonneplan/open-telemetry-nest": [
         "packages/open-telemetry-nest/src/index.ts"
       ],
@@ -44,8 +41,5 @@
       ]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

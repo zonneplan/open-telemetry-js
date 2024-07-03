@@ -1,0 +1,41 @@
+{
+  "name": "dependency-syncer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/dependency-syncer/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/dependency-syncer",
+        "main": "libs/dependency-syncer/src/index.ts",
+        "tsConfig": "libs/dependency-syncer/tsconfig.lib.json",
+        "assets": [
+          "libs/dependency-syncer/*.md",
+          {
+            "input": "./libs/dependency-syncer/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/dependency-syncer/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/dependency-syncer",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./libs/dependency-syncer",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    }
+  },
+  "tags": []
+}
