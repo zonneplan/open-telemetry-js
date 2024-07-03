@@ -18,14 +18,6 @@
         ]
       }
     },
-    "version": {
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "baseBranch": "HEAD:main",
-        "preset": "conventionalcommits",
-        "push": true
-      }
-    },
     "publish": {
       "executor": "nx:run-commands",
       "options": {

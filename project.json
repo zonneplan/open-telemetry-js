@@ -9,6 +9,21 @@
         "config": ".verdaccio/config.yml",
         "storage": "tmp/local-registry/storage"
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "baseBranch": "HEAD:main",
+        "preset": "conventionalcommits",
+        "syncVersions": true,
+        "skipProjectChangelog": true,
+        "postTargets": [
+          "sync-dependencies"
+        ]
+      }
+    },
+    "sync-dependencies": {
+      "executor": "@zonneplan/dependency-syncer:sync"
     }
   }
 }
