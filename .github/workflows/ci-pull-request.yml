@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 22
           registry-url: https://npm.pkg.github.com/
           cache: npm
 
@@ -49,13 +49,13 @@ jobs:
           main-branch-name: main
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --include=optional
 
       - name: Lint
-        run: npx nx affected --target=lint --parallel=8 --exclude=@zonneplan/open-telemetry-js
+        run: npx nx affected --target=lint --parallel=8 --exclude=@zonneplan/open-telemetry-js,@zonneplan/dependency-syncer
 
       - name: Run tests
-        run: npx nx affected --target=test --parallel=8 --ci --exclude=@zonneplan/open-telemetry-js
+        run: npx nx affected --target=test --parallel=8 --ci --exclude=@zonneplan/open-telemetry-js,@zonneplan/dependency-syncer
 
       - name: Build
-        run: npx nx affected --target=build --parallel=8 --exclude=@zonneplan/open-telemetry-js
+        run: npx nx affected --target=build --parallel=8 --exclude=@zonneplan/open-telemetry-js,@zonneplan/dependency-syncer

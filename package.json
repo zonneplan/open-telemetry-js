@@ -58,6 +58,9 @@
     "verdaccio": "^5.0.4",
     "webpack-cli": "^5.1.4"
   },
+  "optionalDependencies": {
+    "@nx/nx-linux-x64-gnu": "18.0.8"
+  },
   "nx": {
     "includedScripts": []
   }
