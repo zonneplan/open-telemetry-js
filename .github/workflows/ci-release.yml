@@ -35,7 +35,7 @@ jobs:
 
       - name: Get created tag
         id: get_tag
-        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
+        run: echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
 
       - name: Remove tag from last commit
         run: git tag -d ${{ steps.get_tag.outputs.tag }}
