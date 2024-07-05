@@ -1,6 +1,6 @@
 {
   "name": "@zonneplan/dependency-syncer",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "dependencies": {
     "@nx/devkit": "18.0.8",
     "tslib": "^2.3.0"
