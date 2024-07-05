@@ -9,6 +9,26 @@
         "config": ".verdaccio/config.yml",
         "storage": "tmp/local-registry/storage"
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "baseBranch": "HEAD:main",
+        "preset": "conventionalcommits",
+        "syncVersions": true,
+        "skipProjectChangelog": true,
+        "push": false,
+        "skipCommit": true,
+        "postTargets": [
+          "sync-dependencies"
+        ]
+      }
+    },
+    "sync-dependencies": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx generate @zonneplan/dependency-syncer:sync"
+      }
     }
   }
 }
