@@ -31,7 +31,7 @@ import { MeterProvider } from '@opentelemetry/sdk-metrics';
 
 export interface IOpenTelemetryBuilder {
   /**
-   * @deprecated - will likely be removed in v1.0, use {@link withDiagLogging} instead.
+   * @deprecated - will be removed in v1.1, use {@link withDiagLogging} instead.
    *  for identical behaviour use `withDiagLogging(DiagLogLevel.DEBUG)`
    */
   withDebugLogging(): this;
