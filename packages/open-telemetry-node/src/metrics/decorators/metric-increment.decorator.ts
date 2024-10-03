@@ -1,5 +1,11 @@
 import { GlobalProviders } from '../../globals';
 
+/**
+ * Increments a Counter metric by provided value after a method has been invoked.
+ * @param name The name of the metric to increment.
+ * @param value The value to increment the metric by. Defaults to 1.
+ * @throws Error if the metric is not a counter.
+ */
 export function metricIncrement(
   name: string,
   value = 1

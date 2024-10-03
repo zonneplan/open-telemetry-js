@@ -3,21 +3,28 @@ import { SPAN_ATTRIBUTES } from '../constants';
 import { InvalidParameterAttributeError } from '../errors/invalid-parameter-attribute.error';
 import 'reflect-metadata';
 
+/**
+ * Automatically applies a parameter as an attribute to the active span.
+ * @remarks the method must be decorated with the {@link span} decorator for this to work
+ * @param name - the name for the span attribute, tries to default to the parameter name
+ * @param fn - primitives need no parsing, but if you want to convert the parameter to a string, number or boolean, provide a function
+ * @throws InvalidParameterAttributeError if no function is provided and the parameter is not a string, number or boolean (occurs before function invocation)
+ * @throws Error - if the provided function does not match the signature of the parameter (occurs when the function is invoked)
+ */
 export function spanAttribute<T>(
   name?: string,
   fn?: (param: T) => string | number | boolean
 ): ParameterDecorator;
-export function spanAttribute<T>(
-  fn?: (param: T) => string | number | boolean
-): ParameterDecorator;
 /**
- * Automatically applies a parameter as an attribute to the active span.
+ * Automatically applies a parameter as an attribute to the active span. Tries to default to the parameter name.
  * @remarks the method must be decorated with the {@link span} decorator for this to work
- * @param nameOrFn - either provide a name (defaults to parameter name) or a function to parse the parameter
- * @param fn - the function must match the signature of the parameter, or a runtime error may occur
+ * @param fn - primitives need no parsing, but if you want to convert the parameter to a string, number or boolean, provide a function
  * @throws InvalidParameterAttributeError if no function is provided and the parameter is not a string, number or boolean (occurs before function invocation)
  * @throws Error - if the provided function does not match the signature of the parameter (occurs when the function is invoked)
  */
+export function spanAttribute<T>(
+  fn?: (param: T) => string | number | boolean
+): ParameterDecorator;
 export function spanAttribute<T>(
   nameOrFn?: string | ((param: T) => string | number | boolean),
   fn?: (param: T) => string | number | boolean

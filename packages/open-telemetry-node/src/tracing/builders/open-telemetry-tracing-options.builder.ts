@@ -7,20 +7,38 @@ import { Instrumentation } from '@opentelemetry/instrumentation/build/src/types'
 
 export interface IOpenTelemetryTracingOptionsBuilder
   extends OptionsBuilder<OpenTelemetryTracingOptions> {
+  /**
+   * Adds a sampler to the options.
+   * @param sampler
+   */
   withSampler(sampler: Sampler): this;
 
+  /**
+   * Adds a span exporter to the options.
+   * @param exporter
+   */
   withSpanExporter(
     exporter: SpanExporter
   ): this;
 
+  /**
+   * Adds instrumentation to the options.
+   * @param instrumentations
+   */
   withInstrumentation(
     ...instrumentations: Instrumentation[]
   ): this;
 
+  /**
+   * Adds a span processor to the options.
+   * Uses a factory instead of an instance to allow for late binding of the exporter.
+   * @param processorFactory
+   */
   withSpanProcessor(
     processorFactory: (exporter: SpanExporter) => SpanProcessor
   ): this;
 
+  /** @inheritdoc */
   build(): OpenTelemetryTracingOptions;
 }
 
@@ -37,12 +55,14 @@ export class OpenTelemetryTracingOptionsBuilder
   private processorFactories: ((exporter: SpanExporter) => SpanProcessor)[] =
     [];
 
+  /** @inheritdoc */
   public withSampler(sampler: Sampler): this {
     this.options.sampler = sampler;
 
     return this;
   }
 
+  /** @inheritdoc */
   public withSpanExporter(
     exporter: SpanExporter
   ): this {
@@ -51,6 +71,7 @@ export class OpenTelemetryTracingOptionsBuilder
     return this;
   }
 
+  /** @inheritdoc */
   public withInstrumentation(
     ...instrumentations: Instrumentation[]
   ): this {
@@ -60,6 +81,7 @@ export class OpenTelemetryTracingOptionsBuilder
     return this;
   }
 
+  /** @inheritdoc */
   public withSpanProcessor(
     processorFactory: (exporter: SpanExporter) => SpanProcessor
   ): this {
@@ -68,6 +90,7 @@ export class OpenTelemetryTracingOptionsBuilder
     return this;
   }
 
+  /** @inheritdoc */
   public $if(condition: boolean, fn: OptionsBuilderFn<this>): this {
     if (condition) {
       fn(this);
@@ -76,7 +99,7 @@ export class OpenTelemetryTracingOptionsBuilder
     return this;
   }
 
-
+  /** @inheritdoc */
   public build(): OpenTelemetryTracingOptions {
     const options = this.options;
     this.assertIsValidConfig(options);

@@ -36,8 +36,16 @@ export interface IOpenTelemetryBuilder {
    */
   withDebugLogging(): this;
 
+  /**
+   * Enables diagnostic logging with the specified level.
+   * @param level
+   */
   withDiagLogging(level: DiagLogLevel): this;
 
+  /**
+   * Configures logging with the specified options.
+   * @param optionsBuilderOrOptions either a builder function or the options object.
+   */
   withLogging(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       IOpenTelemetryLoggingOptionsBuilder,
@@ -45,6 +53,10 @@ export interface IOpenTelemetryBuilder {
     >
   ): this;
 
+  /**
+   * Configures metrics with the specified options.
+   * @param optionsBuilderOrOptions either a builder function or the options object.
+   */
   withMetrics(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       IOpenTelemetryMetricsOptionsBuilder,
@@ -52,6 +64,10 @@ export interface IOpenTelemetryBuilder {
     >
   ): this;
 
+  /**
+   * Configures tracing with the specified options.
+   * @param optionsBuilderOrOptions either a builder function or the options object.
+   */
   withTracing(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       IOpenTelemetryTracingOptionsBuilder,
@@ -59,6 +75,9 @@ export interface IOpenTelemetryBuilder {
     >
   ): this;
 
+  /**
+   * Starts the OpenTelemetry SDK with the configured options.
+   */
   start(): void;
 }
 
@@ -73,6 +92,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     this.resource = this.getResource();
   }
 
+  /** @inheritdoc */
   withDiagLogging(level: DiagLogLevel): this {
     this.diagLogLevel = level;
     return this;
@@ -90,6 +110,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   public withLogging(
     options: OpenTelemetryLoggingOptions
   ): this;
+  /** @inheritdoc */
   public withLogging(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       OpenTelemetryLoggingOptionsBuilder,
@@ -111,6 +132,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   public withMetrics(
     options: OpenTelemetryMetricsOptions
   ): this;
+  /** @inheritdoc */
   public withMetrics(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       OpenTelemetryMetricsOptionsBuilder,
@@ -132,6 +154,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   public withTracing(
     options: OpenTelemetryTracingOptions
   ): this;
+  /** @inheritdoc */
   public withTracing(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       OpenTelemetryTracingOptionsBuilder,
@@ -147,6 +170,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     return this;
   }
 
+  /** @inheritdoc */
   public start(): void {
     this.tryEnableDiagLogging();
     this.tryEnableLogging();

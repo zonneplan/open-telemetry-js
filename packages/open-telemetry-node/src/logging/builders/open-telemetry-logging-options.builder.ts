@@ -6,10 +6,15 @@ import { LogRecordExporter } from '@opentelemetry/sdk-logs';
 
 export interface IOpenTelemetryLoggingOptionsBuilder
   extends OptionsBuilder<OpenTelemetryLoggingOptions> {
+  /**
+   * Adds a log record exporter to the options.
+   * @param exporter
+   */
   withLogRecordExporter(
     exporter: LogRecordExporter
   ): this;
 
+  /** @inheritdoc */
   build(): OpenTelemetryLoggingOptions;
 }
 
@@ -20,6 +25,7 @@ export class OpenTelemetryLoggingOptionsBuilder
     logRecordExporters: []
   };
 
+  /** @inheritdoc */
   public withLogRecordExporter(
     exporter: LogRecordExporter
   ): this {
@@ -29,6 +35,7 @@ export class OpenTelemetryLoggingOptionsBuilder
     return this;
   }
 
+  /** @inheritdoc */
   public $if(condition: boolean, fn: OptionsBuilderFn<this>): this {
     if (condition) {
       fn(this);
@@ -37,6 +44,7 @@ export class OpenTelemetryLoggingOptionsBuilder
     return this;
   }
 
+  /** @inheritdoc */
   public build(): OpenTelemetryLoggingOptions {
     const options = this.options;
     this.assertIsValidConfig(options);
