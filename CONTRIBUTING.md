@@ -11,7 +11,7 @@ It could be:
 * a code contribution to [fix a bug that you found](#code-contribution-for-a-new-bug)
 * a code contribution to [add a new feature](#code-contribution-for-a-new-feature)
 
-By contributing to this project, you license your contribution under the same [license](https://github.com/zonneplan/open-telemetry-js/blob/main/LICENSE.md) that we use.
+By contributing to this project, you license your contribution under the same [license](./LICENSE.md) that we use.
 
 ## Bug reports
 

@@ -1,4 +1,4 @@
-name: '[MAIN] Lint / Test / Build'
+name: 'zonneplan/open-telemetry-js CI'
 
 on:
   push:
