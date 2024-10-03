@@ -16,13 +16,6 @@ export class Gauge {
   }
 
   /**
-   * @deprecated use {@link record} instead. Will be removed in version 1.1.
-   */
-  public set(value: number, attributes?: Attributes): void {
-    this.gauge.record(value, attributes);
-  }
-
-  /**
    * Records the value to the gauge.
    * @param value the value to record.
    * @param attributes optional attributes to be set on the gauge.

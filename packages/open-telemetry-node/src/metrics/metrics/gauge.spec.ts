@@ -24,58 +24,6 @@ describe('Gauge', () => {
     jest.useFakeTimers().setSystemTime(currentDate.getTime());
   });
 
-  describe('set', () => {
-    it('should set the correct count and attributes when set is called', async () => {
-      // Arrange
-      const value = 5;
-      const attributes = { test: 'test' };
-
-      // Act
-      gauge?.set(value, attributes);
-
-      // Assert
-      const metrics = await getMetrics();
-      const metricDescriptor = metrics?.descriptor;
-      expect(metricDescriptor?.name).toEqual(metricName);
-
-      const dataPoints = metrics?.dataPoints;
-      expect(dataPoints).toHaveLength(1);
-
-      const gaugeData = dataPoints?.[0];
-      expect(gaugeData?.value).toEqual(value);
-      expect(gaugeData?.attributes).toEqual(attributes);
-    });
-
-    it('should set multiple data points for the same metric when set is called multiple times with different attributes', async () => {
-      // Arrange
-      const attributes2 = { test: 'test' };
-      const attributes3 = { test: 'test2' };
-
-      // Act
-      gauge?.set(1);
-      gauge?.set(2, attributes2);
-      gauge?.set(3, attributes3);
-
-      // Assert
-      const metrics = await getMetrics();
-      const metricDescriptor = metrics?.descriptor;
-      expect(metricDescriptor?.name).toEqual(metricName);
-
-      const dataPoints = metrics?.dataPoints;
-      expect(dataPoints).toHaveLength(3);
-
-      const [gaugeData, gaugeData2, gaugeData3] = dataPoints ?? [];
-      expect(gaugeData?.value).toEqual(1);
-      expect(gaugeData?.attributes).toEqual({});
-
-      expect(gaugeData2?.value).toEqual(2);
-      expect(gaugeData2?.attributes).toEqual(attributes2);
-
-      expect(gaugeData3?.value).toEqual(3);
-      expect(gaugeData3?.attributes).toEqual(attributes3);
-    });
-  });
-
   describe('record', () => {
     it('should set the correct count and attributes when set is called', async () => {
       // Arrange

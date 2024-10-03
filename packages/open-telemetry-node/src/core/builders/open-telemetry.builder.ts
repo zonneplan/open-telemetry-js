@@ -31,12 +31,6 @@ import { MeterProvider } from '@opentelemetry/sdk-metrics';
 
 export interface IOpenTelemetryBuilder {
   /**
-   * @deprecated - will be removed in v1.1, use {@link withDiagLogging} instead.
-   *  for identical behaviour use `withDiagLogging(DiagLogLevel.DEBUG)`
-   */
-  withDebugLogging(): this;
-
-  /**
    * Enables diagnostic logging with the specified level.
    * @param level
    */
@@ -95,12 +89,6 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   /** @inheritdoc */
   withDiagLogging(level: DiagLogLevel): this {
     this.diagLogLevel = level;
-    return this;
-  }
-
-  /** @inheritdoc */
-  public withDebugLogging(): this {
-    this.diagLogLevel = DiagLogLevel.DEBUG;
     return this;
   }
 
