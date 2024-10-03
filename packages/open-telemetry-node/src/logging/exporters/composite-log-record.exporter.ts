@@ -1,6 +1,9 @@
 import { ExportResult } from '@opentelemetry/core';
 import { LogRecordExporter, ReadableLogRecord } from '@opentelemetry/sdk-logs';
 
+/**
+ * An exporter that delegates to multiple exporters.
+ */
 export class CompositeLogRecordExporter implements LogRecordExporter {
   private readonly _exporters: LogRecordExporter[];
 
@@ -8,6 +11,7 @@ export class CompositeLogRecordExporter implements LogRecordExporter {
     this._exporters = exporters;
   }
 
+  /** @inheritdoc */
   public export(
     logs: ReadableLogRecord[],
     resultCallback: (result: ExportResult) => void
@@ -17,6 +21,7 @@ export class CompositeLogRecordExporter implements LogRecordExporter {
     }
   }
 
+  /** @inheritdoc */
   public async shutdown(): Promise<void> {
     await Promise.all(
       this._exporters.map((exporter) => exporter.shutdown())

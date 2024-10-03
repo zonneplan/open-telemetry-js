@@ -1,6 +1,14 @@
 export interface OptionsBuilder<T> {
+  /**
+   * Conditionally applies the provided function to the builder.
+   * @param condition true to apply the function, false to skip it.
+   * @param fn The function to apply.
+   */
   $if(condition: boolean, fn: OptionsBuilderFn<this>): this;
 
+  /**
+   * Builds the options object.
+   */
   build(): T;
 }
 

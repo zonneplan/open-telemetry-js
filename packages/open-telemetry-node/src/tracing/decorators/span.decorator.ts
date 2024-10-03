@@ -4,28 +4,55 @@ import { SPAN_ATTRIBUTES } from '../constants';
 import { SpanAttributeParameter } from '../models/span-attribute-parameter.model';
 import { getTracer } from '../tracer/get-tracer';
 
-export function span(options?: SpanOptions): MethodDecorator;
-export function span(name?: string, options?: SpanOptions): MethodDecorator;
 /**
  * Decorator to start a span around a method.
  * To avoid less clutter within methods, this decorator can be used instead of startSpan.
+ * The span name will be ClassName::methodName if no name is provided.
  * @example
+ * ```typescript
  *  class MyClass {
  *    @span('my-method', { myAttribute: 'myValue' })
  *    myMethod() {
  *    // do something
  *    }
  *   }
+ * ```
  * @example
+ * ```typescript
  *  class MyClass {
  *    @span()
  *    myMethod() {
  *      // do something
  *    }
  *   }
- * @param nameOrOptions name if string, options if object
- * @param options options if name is string
+ * ```
+ * @param options
  */
+export function span(options?: SpanOptions): MethodDecorator;
+/**
+ * Decorator to start a span around a method.
+ * To avoid less clutter within methods, this decorator can be used instead of startSpan.
+ * The span name will be ClassName::methodName if no name is provided.
+ * @example
+ * ```typescript
+ *  class MyClass {
+ *    @span('my-method', { myAttribute: 'myValue' })
+ *    myMethod() {
+ *    // do something
+ *    }
+ *   }
+ * ```
+ * @example
+ * ```typescript
+ *  class MyClass {
+ *    @span()
+ *    myMethod() {
+ *      // do something
+ *    }
+ *   }
+ * ```
+ */
+export function span(name?: string, options?: SpanOptions): MethodDecorator;
 export function span(
   nameOrOptions?: string | SpanOptions,
   options?: SpanOptions

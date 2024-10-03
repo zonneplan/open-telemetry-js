@@ -2,6 +2,12 @@ import { context, ROOT_CONTEXT, Span, trace } from '@opentelemetry/api';
 import { SpanOptions } from '../models/span-options.model';
 import { getTracer } from '../tracer/get-tracer';
 
+/**
+ * Starts an active span.
+ * @param name
+ * @param fn
+ * @param options
+ */
 export const startActiveSpan = (
   name: string,
   fn: (parentSpan: Span) => void,

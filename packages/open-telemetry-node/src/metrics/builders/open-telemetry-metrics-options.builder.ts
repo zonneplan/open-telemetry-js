@@ -6,8 +6,15 @@ import { InvalidOptionsError } from '../../core/errors/invalid-options.error';
 
 export interface IOpenTelemetryMetricsOptionsBuilder
   extends OptionsBuilder<OpenTelemetryMetricsOptions> {
+  /**
+   * Allows adding default Prometheus metrics via the prom-client, that are not provided by OTEL.
+   */
   withDefaultMetrics(): this;
 
+  /**
+   * Adds a metric reader
+   * @param reader
+   */
   withMetricReader(reader: MetricReader): this;
 }
 
@@ -19,12 +26,14 @@ export class OpenTelemetryMetricsOptionsBuilder
     metricReaders: []
   };
 
+  /** @inheritdoc */
   public withDefaultMetrics(): this {
     this.options.collectDefaultMetrics = true;
 
     return this;
   }
 
+  /** @inheritdoc */
   public withMetricReader(
     reader: MetricReader
   ): this {
@@ -34,6 +43,7 @@ export class OpenTelemetryMetricsOptionsBuilder
     return this;
   }
 
+  /** @inheritdoc */
   public $if(condition: boolean, fn: OptionsBuilderFn<this>): this {
     if (condition) {
       fn(this);
@@ -42,7 +52,7 @@ export class OpenTelemetryMetricsOptionsBuilder
     return this;
   }
 
-
+  /** @inheritdoc */
   public build(): OpenTelemetryMetricsOptions {
     const options = this.options;
     this.assertIsValidConfig(options);

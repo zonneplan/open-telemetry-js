@@ -2,6 +2,7 @@ import { MetricOptions, MetricTypeMap } from '../models/metric-options.model';
 import { GlobalProviders } from '../../globals';
 
 /**
+ * Gets a metric if exists, otherwise creates a new metric.
  * @returns The metric if exists and open telemetry is initialized, otherwise null.
  */
 export const getOrCreateMetric = <
