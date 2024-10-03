@@ -3,6 +3,9 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { PrometheusNestExporter } from './exporters/prometheus-nest.exporter';
 import { GlobalProviders } from '@zonneplan/open-telemetry-node';
 
+/**
+ * Module for providing the Prometheus metrics controller.
+ */
 @Module({
   controllers: [PrometheusMetricsController]
 })

@@ -2,8 +2,15 @@ import { Controller, Get, Header, HttpCode } from '@nestjs/common';
 import { PrometheusNestExporter } from '../exporters/prometheus-nest.exporter';
 import { GlobalProviders } from '@zonneplan/open-telemetry-node';
 
+/**
+ * Controller to expose the metrics in Prometheus plain text format.
+ */
 @Controller('metrics')
 export class PrometheusMetricsController {
+  /**
+   * Get the metrics in plain text format.
+   * Requires the PrometheusNestExporter to be added as metric reader.
+   */
   @Get()
   @HttpCode(200)
   @Header('Content-Type', 'text/plain')
