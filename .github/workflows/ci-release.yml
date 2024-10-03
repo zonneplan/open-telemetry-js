@@ -44,8 +44,10 @@ jobs:
         run: |
           git add .
           git commit -m "chore(release): bump version to ${{ steps.get_tag.outputs.tag }}"
-          git tag -a ${{ steps.get_tag.outputs.tag }} -m "chore(release): ${{ steps.get_tag.outputs.tag }}"
           git push
+
+          git tag ${{ steps.get_tag.outputs.tag }}
+          git push origin ${{ steps.get_tag.outputs.tag }}
 
       # Order matters for the publishing, packages with dependencies should be published last
       - name: Publish package
