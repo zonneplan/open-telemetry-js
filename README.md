@@ -8,6 +8,10 @@ The aim of this package is to provide some additional tools on top of the offici
 
 We, at Zonneplan, have different (mono) repositories that utilize the power of OpenTelemetry. We built out a small internal package to let us easily integrate OpenTelemetry in our NestJS applications, with as few lines of code as necessary. Furthermore, we wanted to provide some tools to easily use metrics and spans in our applications. We decided that our tools may be useful for other people and thus decided to open-source it.
 
+## Getting started
+
+See the README in the [open-telemetry-node](./packages/open-telemetry-node/README.md) package for a quick start guide.
+
 ## Packages
 
 This repository contains the following packages:
