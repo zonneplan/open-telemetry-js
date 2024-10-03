@@ -1,8 +1,14 @@
 # OpenTelemetry JS Wrapper
 
+![](https://github.com/zonneplan/open-telemetry-js/actions/workflows/ci-main.yml/badge.svg)
+
 ## About this project
 
-The aim of this package is to provide some additional tools on top of the official [OpenTelemetry JS](https://github.com/open-telemetry/opentelemetry-js) packages, to make working with OpenTelemetry in a Node.js (with Nest) environment easier.
+The aim of these packages is to provide some additional tools on top of the official [OpenTelemetry JS](https://github.com/open-telemetry/opentelemetry-js) packages to make working with OpenTelemetry in a Node.js (with or without Nest) environment easier.
+
+The packages provide:
+- pre-configured OpenTelemetry integrations with sane defaults
+- decorators to make Otel instrumentation non-invasive
 
 ## Motivation
 
