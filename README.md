@@ -18,6 +18,10 @@ We, at Zonneplan, have different (mono) repositories that utilize the power of O
 
 See the README in the [open-telemetry-node](./packages/open-telemetry-node/README.md) package for a quick start guide.
 
+### OpenTelemetry stack for quickstart
+
+There is a preconfigured OpenTelemetry setup available in [./docker-compose](./docker-compose/) that you can use to get started with an OpenTelemetry back-end quickly.
+
 ## Packages
 
 This repository contains the following packages:
