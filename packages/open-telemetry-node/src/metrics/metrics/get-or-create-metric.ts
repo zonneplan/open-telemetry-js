@@ -1,5 +1,6 @@
 import { MetricOptions, MetricTypeMap } from '../models/metric-options.model';
 import { GlobalProviders } from '../../globals';
+import { diag } from '@opentelemetry/api';
 
 /**
  * Gets a metric if exists, otherwise creates a new metric.
@@ -12,7 +13,7 @@ export const getOrCreateMetric = <
   options: MetricOptions<TMetricType>
 ): TMetric | null => {
   if (!GlobalProviders.metricProvider) {
-    console.error('OpenTelemetry metrics are not initialized');
+    diag.error('OpenTelemetry metrics are not initialized');
     return null;
   }
 

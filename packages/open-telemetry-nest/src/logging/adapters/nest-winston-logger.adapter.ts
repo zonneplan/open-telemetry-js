@@ -3,7 +3,7 @@ import { Logger } from 'winston';
 import { GlobalProviders } from '@zonneplan/open-telemetry-node';
 import { LogAttributes, SeverityNumber } from '@opentelemetry/api-logs';
 import { LoggerService } from '../services/logger.service';
-import { context } from '@opentelemetry/api';
+import { context, diag } from '@opentelemetry/api';
 import {
   NEST_LOG_LEVEL_WINSTON_SEVERITY,
   SEVERITY_NUMBER_TO_TEXT_MAP,
@@ -126,7 +126,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     }
 
     if (!GlobalProviders.logProvider) {
-      console.error('OpenTelemetry log provider not initialized');
+      diag.error('OpenTelemetry log provider not initialized');
       return;
     }
 
