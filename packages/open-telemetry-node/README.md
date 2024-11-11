@@ -25,11 +25,7 @@ new otel.OpenTelemetryBuilder('nest-example')
   .withTracing(zonneplan.DefaultTracingOptions)
   .withLogging(zonneplan.DefaultLoggingOptions)
   .withMetrics(zonneplan.DefaultMetricsOptions)
-  .withMetrics((options) =>
-    options.$if(process.env['NODE_ENV'] === 'development', (metricsOptions) =>
-      metricsOptions.withMetricReader(new nest.PrometheusNestExporter())
-    )
-  )
+  .withMetrics((options) => options.withMetricReader(new nest.PrometheusNestExporter()))
   .start();
 ```
 
