@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.1.1](https://github.com/zonneplan/open-telemetry-js/compare/v1.1.0...v1.1.1) (2025-01-02)
+
+
+### Bug Fixes
+
+* Use exported types only ([#49](https://github.com/zonneplan/open-telemetry-js/issues/49)) ([3cfcc83](https://github.com/zonneplan/open-telemetry-js/commit/3cfcc83c99fd19303b1cf05c54527557229b4728))
+
 ## [1.1.0](https://github.com/zonneplan/open-telemetry-js/compare/v1.0.2...v1.1.0) (2024-10-08)
 
 
