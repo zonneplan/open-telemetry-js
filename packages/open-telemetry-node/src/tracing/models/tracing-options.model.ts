@@ -1,5 +1,5 @@
 import { Sampler, SpanExporter, SpanProcessor } from '@opentelemetry/sdk-trace-base';
-import { Instrumentation } from '@opentelemetry/instrumentation/build/src/types';
+import { Instrumentation } from '@opentelemetry/instrumentation';
 
 export interface OpenTelemetryTracingOptions {
   sampler: Sampler;

@@ -22,12 +22,10 @@ import {
 import { logs } from '@opentelemetry/api-logs';
 import { CompositeLogRecordExporter } from '../../logging/exporters/composite-log-record.exporter';
 import { GlobalProviders } from '../../globals';
-import {
-  SEMRESATTRS_SERVICE_NAME
-} from '@opentelemetry/semantic-conventions/build/src/resource/SemanticResourceAttributes';
 import { Entries } from '../types/entries.type';
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import { MeterProvider } from '@opentelemetry/sdk-metrics';
+import { SEMRESATTRS_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 
 export interface IOpenTelemetryBuilder {
   /**

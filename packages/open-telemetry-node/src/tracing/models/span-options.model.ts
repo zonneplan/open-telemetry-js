@@ -1,4 +1,4 @@
-import { SpanOptions as OTELSpanOptions } from '@opentelemetry/api/build/src/trace/SpanOptions';
+import { SpanOptions as OTELSpanOptions } from '@opentelemetry/api';
 
 export interface SpanOptions extends OTELSpanOptions {
   /**
