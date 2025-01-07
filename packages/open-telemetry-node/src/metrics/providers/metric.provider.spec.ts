@@ -94,4 +94,18 @@ describe('MetricProvider', () => {
       expect(metric1).toBe(metric2);
     });
   });
+
+  it('should return an observable gauge when provided with observable gauge options', () => {
+    // Arrange
+    const options: MetricOptions<'ObservableGauge'> = {
+      name: 'test',
+      type: 'ObservableGauge'
+    };
+
+    // Act
+    const metric = metricProvider.getOrCreateMetric(options);
+
+    // Assert
+    expect(metric).toHaveProperty('addCallback');
+  });
 });
