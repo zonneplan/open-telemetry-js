@@ -38,6 +38,9 @@ export class MetricProvider {
       case 'Histogram':
         metric = this.meter.createHistogram(name, opts) as TMetric;
         break;
+      case 'ObservableGauge':
+        metric = this.meter.createObservableGauge(name, opts) as TMetric;
+        break;
       default:
         throw new Error(`Unknown metric type: ${opts.type}`);
     }
