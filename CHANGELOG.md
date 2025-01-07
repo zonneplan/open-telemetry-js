@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.0](https://github.com/zonneplan/open-telemetry-js/compare/v1.1.1...v1.2.0) (2025-01-07)
+
+
+### Features
+
+* **open-telemetry-node:** Add ObservableGauge ([d4c5bb7](https://github.com/zonneplan/open-telemetry-js/commit/d4c5bb768a48ae5920338aefeea6d6b5c62bb736))
+
 ## [1.1.1](https://github.com/zonneplan/open-telemetry-js/compare/v1.1.0...v1.1.1) (2025-01-02)
 
 
