@@ -4,6 +4,7 @@ name: open-telemetry-grafana
 services:
   grafana:
     image: grafana/grafana:latest-ubuntu
+    pull_policy: always
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -23,6 +24,7 @@ services:
     image: grafana/agent:latest
     volumes:
       - ./grafana-agent/grafana-agent.river:/etc/agent/config.river:ro
+    pull_policy: always
     environment:
       - AGENT_MODE=flow
     command:
@@ -42,6 +44,7 @@ services:
     image: grafana/loki:latest
     volumes:
       - ./loki/loki.yaml:/etc/loki/loki.yaml:ro
+    pull_policy: always
     command:
       - '-config.file=/etc/loki/loki.yaml'
     ports:
@@ -51,6 +54,7 @@ services:
     image: prom/prometheus:latest
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    pull_policy: always
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--web.enable-remote-write-receiver'
@@ -61,6 +65,7 @@ services:
     image: grafana/tempo:latest
     volumes:
       - ./tempo/tempo.yaml:/etc/tempo.yaml
+    pull_policy: always
     command:
       - '-config.file=/etc/tempo.yaml'
     ports:
