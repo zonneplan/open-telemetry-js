@@ -3,7 +3,7 @@ name: open-telemetry-grafana
 
 services:
   grafana:
-    image: grafana/grafana:10.4.0-ubuntu
+    image: grafana/grafana:latest-ubuntu
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -19,7 +19,7 @@ services:
       - loki
 
   grafana-agent:
-    image: grafana/agent:v0.40.3
+    image: grafana/agent:latest
     volumes:
       - ./grafana-agent/grafana-agent.river:/etc/agent/config.river:ro
     environment:
@@ -38,7 +38,7 @@ services:
       - prometheus
 
   loki:
-    image: grafana/loki:2.9.5
+    image: grafana/loki:latest
     volumes:
       - ./loki/loki.yaml:/etc/loki/loki.yaml:ro
     command:
