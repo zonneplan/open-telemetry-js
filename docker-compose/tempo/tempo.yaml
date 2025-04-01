@@ -1,24 +1,33 @@
-auth_enabled: false
-
 server:
   http_listen_port: 3200
-
+query_frontend:
+  search:
+    duration_slo: 5s
+    throughput_bytes_slo: 1.073741824e+09
+  trace_by_id:
+    duration_slo: 5s
 distributor:
   receivers:
     otlp:
       protocols:
         http:
+          endpoint: "0.0.0.0:4318"
         grpc:
-
+          endpoint: "0.0.0.0:4317"
+ingester:
+  max_block_duration: 5m
 compactor:
   compaction:
-    block_retention: 1h
+    block_retention: 240h
 
 storage:
   trace:
     backend: local
     local:
-      path: /tmp/tempo
+      path: /tmp/tempo/traces
+    pool:
+      max_workers: 100
+      queue_depth: 10000
 
 metrics_generator:
   metrics_ingestion_time_range_slack: 30s
@@ -33,7 +42,7 @@ metrics_generator:
         send_exemplars: true
   processor:
     service_graphs:
-      max_items: 25000                  # Use max_items to adjust the maximum amount of edges tracked (default 10000)
+      max_items: 100000
       dimensions:
         - "deployment.environment"
         - "service.namespace"
@@ -41,10 +50,13 @@ metrics_generator:
       dimensions:
         - "deployment.environment"
         - "service.namespace"
-
 overrides:
   defaults:
+    global:
+      max_bytes_per_trace: 50000000
     metrics_generator:
-      processors: [service-graphs, span-metrics] # enables metrics generator
+      processors: [ service-graphs, span-metrics ]
     ingestion:
-      max_traces_per_user: 100000
+      burst_size_bytes: 40000000
+      rate_limit_bytes: 30000000
+      max_traces_per_user: 1000000
