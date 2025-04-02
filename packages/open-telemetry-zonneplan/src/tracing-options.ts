@@ -13,9 +13,6 @@ export const DefaultTracingOptions = new OpenTelemetryTracingOptionsBuilder()
       '@opentelemetry/instrumentation-fs': {
         enabled: false
       },
-      '@opentelemetry/instrumentation-ioredis': {
-        enabled: false
-      }
     }),
     new WinstonInstrumentation({
       enabled: true
