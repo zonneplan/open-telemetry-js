@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.3.0](https://github.com/zonneplan/open-telemetry-js/compare/v1.2.0...v1.3.0) (2025-04-02)
+
+
+### Features
+
+* **open-telemetry-zonneplan:** enable io-redis tracing ([66ee994](https://github.com/zonneplan/open-telemetry-js/commit/66ee994d1e2d44cac1621ad6b1f0f5319d2b4ca3))
+
 ## [1.2.0](https://github.com/zonneplan/open-telemetry-js/compare/v1.1.1...v1.2.0) (2025-01-07)
 
 
