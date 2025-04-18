@@ -1,5 +1,4 @@
 name: open-telemetry-grafana
-
 services:
   grafana:
     image: grafana/grafana:latest-ubuntu
@@ -19,17 +18,16 @@ services:
       - tempo
       - loki
 
-  grafana-agent:
-    image: grafana/agent:latest
+  grafana-alloy:
+    image: grafana/alloy:latest
     volumes:
-      - ./grafana-agent/grafana-agent.river:/etc/agent/config.river:ro
+      - ./grafana-alloy/config.river:/etc/alloy/config.river:ro
     pull_policy: always
-    environment:
-      - AGENT_MODE=flow
     command:
       - run
       - --server.http.listen-addr=0.0.0.0:12345
-      - /etc/agent/config.river
+      - --stability.level=experimental
+      - /etc/alloy/config.river
     ports:
       - "12345:12345"
       - 4317:4317
