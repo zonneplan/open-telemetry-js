@@ -14,7 +14,7 @@
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
     "@nx/devkit": "18.0.8",
-    "axios": "^1.6.0",
+    "axios": "^1.12.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tslib": "^2.3.0"
