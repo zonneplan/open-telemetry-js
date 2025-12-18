@@ -2,6 +2,10 @@ name: 'Release package'
 
 on: workflow_dispatch
 
+permissions:
+  id-token: write
+  contents: write
+
 jobs:
   main:
     name: Release package
@@ -52,7 +56,6 @@ jobs:
       # Order matters for the publishing, packages with dependencies should be published last
       - name: Publish package
         run: |
-          echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}' > ~/.npmrc
           npx nx run open-telemetry-node:publish
           npx nx run open-telemetry-nest:publish
           npx nx run open-telemetry-zonneplan:publish
