@@ -4,7 +4,7 @@ import {
   OpenTelemetryTracingOptions,
   OpenTelemetryTracingOptionsBuilder
 } from '../../tracing';
-import { detectResourcesSync, envDetector, IResource, Resource } from '@opentelemetry/resources';
+import { detectResources, envDetector, Resource, resourceFromAttributes } from '@opentelemetry/resources';
 import {
   IOpenTelemetryMetricsOptionsBuilder,
   OpenTelemetryMetricsOptions,
@@ -25,7 +25,7 @@ import { GlobalProviders } from '../../globals';
 import { Entries } from '../types/entries.type';
 import { NodeSDK } from '@opentelemetry/sdk-node';
 import { MeterProvider } from '@opentelemetry/sdk-metrics';
-import { SEMRESATTRS_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
+import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions';
 
 export interface IOpenTelemetryBuilder {
   /**
@@ -78,7 +78,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   private loggingOptions?: OpenTelemetryLoggingOptions;
   private metricsOptions?: OpenTelemetryMetricsOptions;
   private tracingOptions?: OpenTelemetryTracingOptions;
-  private readonly resource: IResource;
+  private readonly resource: Resource;
 
   public constructor(private readonly serviceName: string) {
     this.resource = this.getResource();
@@ -177,18 +177,15 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
       return;
     }
 
-    GlobalProviders.logProvider = new LoggerProvider({
-      resource: this.resource
-    });
-    logs.setGlobalLoggerProvider(GlobalProviders.logProvider);
-
     const compositeLogger = new CompositeLogRecordExporter(
       ...this.loggingOptions.logRecordExporters
     );
 
-    GlobalProviders.logProvider.addLogRecordProcessor(
-      new BatchLogRecordProcessor(compositeLogger)
-    );
+    GlobalProviders.logProvider = new LoggerProvider({
+      resource: this.resource,
+      processors: [new BatchLogRecordProcessor(compositeLogger)]
+    });
+    logs.setGlobalLoggerProvider(GlobalProviders.logProvider);
 
     if (this.isAtLeastDebugDiagLogLevel()) {
       console.debug('Logging enabled.');
@@ -241,12 +238,12 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   /**
    * Combines the service name with detected resources from the environment.
    */
-  private getResource(): IResource {
-    const baseResource = new Resource({
-      [SEMRESATTRS_SERVICE_NAME]: this.serviceName
+  private getResource(): Resource {
+    const baseResource = resourceFromAttributes({
+      [ATTR_SERVICE_NAME]: this.serviceName
     });
 
-    const detectedResources = detectResourcesSync({
+    const detectedResources = detectResources({
       detectors: [envDetector]
     });
 

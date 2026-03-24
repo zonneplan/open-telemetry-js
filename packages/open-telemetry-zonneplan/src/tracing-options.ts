@@ -1,4 +1,4 @@
-import { KafkaJsInstrumentation } from 'opentelemetry-instrumentation-kafkajs';
+import { KafkaJsInstrumentation } from '@opentelemetry/instrumentation-kafkajs';
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
 import { WinstonInstrumentation } from '@opentelemetry/instrumentation-winston';
 import { MySQLInstrumentation } from '@opentelemetry/instrumentation-mysql';
