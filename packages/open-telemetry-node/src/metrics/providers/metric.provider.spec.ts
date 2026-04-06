@@ -9,9 +9,8 @@ describe('MetricProvider', () => {
   let metricProvider: MetricProvider;
 
   beforeAll(() => {
-
     new OpenTelemetryBuilder('test')
-      .withMetrics(x => x.withMetricReader(mock<MetricReader>()))
+      .withMetrics((x) => x.withMetricReader(mock<MetricReader>()))
       .start();
   });
 
@@ -27,7 +26,7 @@ describe('MetricProvider', () => {
       // Arrange
       const options: MetricOptions<'Gauge'> = {
         name: 'test',
-        type: 'Gauge'
+        type: 'Gauge',
       };
 
       // Act
@@ -41,7 +40,7 @@ describe('MetricProvider', () => {
       // Arrange
       const options: MetricOptions<'Counter'> = {
         name: 'test',
-        type: 'Counter'
+        type: 'Counter',
       };
 
       // Act
@@ -55,7 +54,7 @@ describe('MetricProvider', () => {
       // Arrange
       const options: MetricOptions<'Histogram'> = {
         name: 'test',
-        type: 'Histogram'
+        type: 'Histogram',
       };
 
       // Act
@@ -69,21 +68,21 @@ describe('MetricProvider', () => {
       // Arrange
       const options = {
         name: 'test',
-        type: 'unknown'
+        type: 'unknown',
       } as unknown as MetricOptions<'Gauge'>;
 
       // Act
       const act = () => metricProvider.getOrCreateMetric(options);
 
       // Assert
-      expect(act).toThrowError('Unknown metric type: unknown');
+      expect(act).toThrow('Unknown metric type: unknown');
     });
 
     it('should return the same metric when called multiple times with the same options', () => {
       // Arrange
       const options: MetricOptions<'Gauge'> = {
         name: 'test',
-        type: 'Gauge'
+        type: 'Gauge',
       };
 
       // Act
@@ -99,7 +98,7 @@ describe('MetricProvider', () => {
     // Arrange
     const options: MetricOptions<'ObservableGauge'> = {
       name: 'test',
-      type: 'ObservableGauge'
+      type: 'ObservableGauge',
     };
 
     // Act
