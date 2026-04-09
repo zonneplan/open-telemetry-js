@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'open-telemetry-nest',
   preset: '../../jest.preset.js',

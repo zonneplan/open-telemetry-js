@@ -1,4 +1,4 @@
-﻿import { createLogger, format, LoggerOptions as WinstonLoggerOptions, transports } from 'winston';
+import { createLogger, format, LoggerOptions as WinstonLoggerOptions, transports } from 'winston';
 import { LogLevel } from '@nestjs/common';
 import { NestWinstonLoggerAdapter } from '@zonneplan/open-telemetry-nest';
 import { yellow } from '@nestjs/common/utils/cli-colors.util';
@@ -36,10 +36,9 @@ export class LoggerFactory {
           format.colorize(),
           format.printf(
             ({ level, message, timestamp, ...meta }) => {
-              let context = meta['context']
-                ? meta['context']
-                : 'unknown';
-              context = yellow(context);
+              const context = yellow(
+                typeof meta['context'] === 'string' ? meta['context'] : 'unknown'
+              );
 
               delete meta['context']; // remove context from meta dump in log
 

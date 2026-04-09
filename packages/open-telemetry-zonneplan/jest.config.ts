@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'open-telemetry-zonneplan',
   preset: '../../jest.preset.js',

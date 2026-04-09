@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'dependency-syncer',
   preset: '../../jest.preset.js',

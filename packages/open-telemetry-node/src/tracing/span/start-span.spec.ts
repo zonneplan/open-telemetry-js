@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 import { startSpan } from './start-span';
 import { OpenTelemetryBuilder } from '../../core/builders/open-telemetry.builder';
 import { AlwaysOnSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace-node';

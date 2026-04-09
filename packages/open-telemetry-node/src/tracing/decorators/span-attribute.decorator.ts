@@ -75,8 +75,7 @@ export function spanAttribute<T>(
  * Somewhat of a hacky solution, but will do the trick
  * @param fn
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
-function getParameterNames(fn: Function): string[] {
+function getParameterNames(fn: (...args: unknown[]) => unknown): string[] {
   const stringifiedFunction = fn.toString();
 
   const start = stringifiedFunction.indexOf('(');

@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'nest-app',
   preset: '../../jest.preset.js',
