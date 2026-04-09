@@ -2,10 +2,12 @@ import { DefaultTracingOptions } from './tracing-options';
 
 describe('DefaultTracingOptions', () => {
   it('does not register duplicate instrumentations', () => {
+    // Act
     const instrumentationNames = DefaultTracingOptions.instrumentations.map(
       (instrumentation) => instrumentation.instrumentationName
     );
 
+    // Assert
     const duplicateNames = instrumentationNames.filter(
       (name, index) => instrumentationNames.indexOf(name) !== index
     );
@@ -14,10 +16,12 @@ describe('DefaultTracingOptions', () => {
   });
 
   it('includes the core instrumentations we expect from the auto bundle', () => {
+    // Act
     const instrumentationNames = DefaultTracingOptions.instrumentations.map(
       (instrumentation) => instrumentation.instrumentationName
     );
 
+    // Assert
     expect(instrumentationNames).toContain('@opentelemetry/instrumentation-kafkajs');
     expect(instrumentationNames).toContain('@opentelemetry/instrumentation-mysql');
     expect(instrumentationNames).toContain('@opentelemetry/instrumentation-nestjs-core');
