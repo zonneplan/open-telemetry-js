@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.3.4](https://github.com/zonneplan/open-telemetry-js/compare/v1.3.3...v1.3.4) (2026-04-10)
+
+
+### Bug Fixes
+
+* **deps:** Update version bump related dependencies ([a9289b3](https://github.com/zonneplan/open-telemetry-js/commit/a9289b36965471a40cc40cf7b0ef1247bca4fd0c))
+
 ## [1.3.3](https://github.com/zonneplan/open-telemetry-js/compare/v1.3.2...v1.3.3) (2025-12-18)
 
 ## [1.3.2](https://github.com/zonneplan/open-telemetry-js/compare/v1.3.1...v1.3.2) (2025-12-18)
