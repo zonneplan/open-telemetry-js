@@ -58,7 +58,7 @@
     "ts-jest": "29.4.9",
     "ts-node": "10.9.2",
     "typescript": "5.9.3",
-    "verdaccio": "6.3.2",
+    "verdaccio": "6.4.0",
     "webpack-cli": "^5.1.4"
   },
   "optionalDependencies": {
