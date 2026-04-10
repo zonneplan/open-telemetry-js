@@ -1,5 +1,5 @@
 import { OptionsBuilder, OptionsBuilderFn } from '../../core/models/options-builder.models';
-import assert from 'assert';
+import assert from 'node:assert';
 import { OpenTelemetryMetricsOptions } from '../models/metrics-options.model';
 import { MetricReader } from '@opentelemetry/sdk-metrics';
 import { InvalidOptionsError } from '../../core/errors/invalid-options.error';

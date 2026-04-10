@@ -1,6 +1,6 @@
 import { OptionsBuilder, OptionsBuilderFn } from '../../core/models/options-builder.models';
 import { OpenTelemetryLoggingOptions } from '../models/logging-options.model';
-import * as assert from 'assert';
+import * as assert from 'node:assert';
 import { InvalidOptionsError } from '../../core/errors/invalid-options.error';
 import { LogRecordExporter } from '@opentelemetry/sdk-logs';
 
