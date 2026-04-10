@@ -22,6 +22,7 @@
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
+    "@jscutlery/semver": "^6.0.0",
     "@nestjs/schematics": "^11.0.10",
     "@nestjs/testing": "^11.1.17",
     "@nx/eslint": "22.6.4",
@@ -43,8 +44,10 @@
     "@typescript-eslint/eslint-plugin": "7.18.0",
     "@typescript-eslint/parser": "7.18.0",
     "ajv": "^8.18.0",
+    "conventional-changelog-conventionalcommits": "^7.0.2",
     "eslint": "8.57.1",
     "eslint-config-prettier": "10.1.8",
+    "git-raw-commits": "^4.0.0",
     "husky": "^9.1.7",
     "jest": "30.3.0",
     "jest-environment-jsdom": "30.3.0",
