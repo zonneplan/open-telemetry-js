@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.3.5](https://github.com/zonneplan/open-telemetry-js/compare/v1.3.4...v1.3.5) (2026-04-24)
+
+
+### Bug Fixes
+
+* **docker-compose:** set tempo version to 2.9.0 ([9f51244](https://github.com/zonneplan/open-telemetry-js/commit/9f51244bb1a44da2fbab6ebcbf689b4faa8371fe))
+* repair publishing ([af88aa2](https://github.com/zonneplan/open-telemetry-js/commit/af88aa2c7319e0eef2d6766f5dadc6519f9d2f22))
+
 ## [1.3.4](https://github.com/zonneplan/open-telemetry-js/compare/v1.3.3...v1.3.4) (2026-04-10)
 
 
