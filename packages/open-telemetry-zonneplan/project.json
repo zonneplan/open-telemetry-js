@@ -20,13 +20,13 @@
     },
     "publish": {
       "executor": "nx:run-commands",
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "cwd": "packages/open-telemetry-zonneplan",
         "commands": [
           "npm publish"
-        ],
-        "dependsOn": [
-          "build"
         ]
       }
     }
