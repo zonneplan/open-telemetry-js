@@ -59,7 +59,7 @@ services:
       - 9090:9090
 
   tempo:
-    image: grafana/tempo:latest
+    image: grafana/tempo:2.9.0
     volumes:
       - ./tempo/tempo.yaml:/etc/tempo.yaml
     pull_policy: always

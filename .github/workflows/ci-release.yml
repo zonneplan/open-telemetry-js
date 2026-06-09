@@ -2,6 +2,10 @@ name: 'Release package'
 
 on: workflow_dispatch
 
+permissions:
+  id-token: write
+  contents: write
+
 jobs:
   main:
     name: Release package
@@ -19,9 +23,9 @@ jobs:
           git config --local user.name "GitHub Actions"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
 
       - name: Install dependencies
@@ -52,7 +56,6 @@ jobs:
       # Order matters for the publishing, packages with dependencies should be published last
       - name: Publish package
         run: |
-          echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}' > ~/.npmrc
           npx nx run open-telemetry-node:publish
           npx nx run open-telemetry-nest:publish
           npx nx run open-telemetry-zonneplan:publish
