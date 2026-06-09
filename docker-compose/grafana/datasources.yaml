@@ -56,3 +56,17 @@ datasources:
       manageAlerts: true
       prometheusType: Prometheus
       disableRecordingRules: false
+
+
+  - name: Pyroscope
+    uid: pyroscope_uid
+    type: grafana-pyroscope-datasource
+    access: proxy
+    orgId: 1
+    url: http://pyroscope:4040
+    basicAuth: false
+    isDefault: false
+    version: 1
+    editable: false
+    jsonData:
+      minStep: '15s'
