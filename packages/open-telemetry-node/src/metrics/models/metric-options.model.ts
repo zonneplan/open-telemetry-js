@@ -1,4 +1,9 @@
-import { Counter, Histogram, ObservableGauge } from '@opentelemetry/api';
+import {
+  Counter,
+  Histogram,
+  ObservableCounter,
+  ObservableGauge,
+} from '@opentelemetry/api';
 import { MetricOptions as OtelMetricOptions } from '@opentelemetry/api';
 import { Gauge } from '../metrics/gauge';
 
@@ -7,6 +12,7 @@ export type MetricTypeMap = {
   Counter: Counter;
   Histogram: Histogram;
   ObservableGauge: ObservableGauge;
+  ObservableCounter: ObservableCounter;
 };
 
 export type Metrics = MetricTypeMap[MetricType];

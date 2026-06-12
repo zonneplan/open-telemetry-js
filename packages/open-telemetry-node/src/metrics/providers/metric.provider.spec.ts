@@ -107,4 +107,18 @@ describe('MetricProvider', () => {
     // Assert
     expect(metric).toHaveProperty('addCallback');
   });
+
+  it('should return an observable counter when provided with observable counter options', () => {
+    // Arrange
+    const options: MetricOptions<'ObservableCounter'> = {
+      name: 'test',
+      type: 'ObservableCounter',
+    };
+
+    // Act
+    const metric = metricProvider.getOrCreateMetric(options);
+
+    // Assert
+    expect(metric).toHaveProperty('addCallback');
+  });
 });
