@@ -1,4 +1,9 @@
-import { Counter, Histogram } from '@opentelemetry/api';
+import {
+  Counter,
+  Histogram,
+  ObservableCounter,
+  ObservableGauge,
+} from '@opentelemetry/api';
 
 // Builders
 export {
@@ -11,7 +16,7 @@ export { metricIncrement } from './decorators/metric-increment.decorator';
 
 // Metrics
 export { Gauge } from './metrics/gauge';
-export type { Counter, Histogram };
+export type { Counter, Histogram, ObservableGauge, ObservableCounter };
 export { getOrCreateMetric } from './metrics/get-or-create-metric';
 
 // Models
