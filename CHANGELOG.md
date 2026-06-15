@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.4.0](https://github.com/zonneplan/open-telemetry-js/compare/v1.3.5...v1.4.0) (2026-06-15)
+
+
+### Features
+
+* **metrics:** add ObservableCounter support to getOrCreateMetric ([#121](https://github.com/zonneplan/open-telemetry-js/issues/121)) ([6f8fd42](https://github.com/zonneplan/open-telemetry-js/commit/6f8fd426b9d3410f5ae8e33e98595b597739cf0b))
+
 ## [1.3.5](https://github.com/zonneplan/open-telemetry-js/compare/v1.3.4...v1.3.5) (2026-04-24)
 
 
