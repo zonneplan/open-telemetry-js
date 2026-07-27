@@ -1,7 +1,7 @@
 {
   "name": "@zonneplan/open-telemetry-node",
   "license": "MIT",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "dependencies": {
     "@opentelemetry/api": "^1.9.1",
     "@opentelemetry/api-logs": "^0.221.0",
