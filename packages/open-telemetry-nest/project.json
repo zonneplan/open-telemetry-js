@@ -6,28 +6,20 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "packages/open-telemetry-nest/dist",
         "main": "packages/open-telemetry-nest/src/index.ts",
         "tsConfig": "packages/open-telemetry-nest/tsconfig.lib.json",
-        "assets": [
-          "packages/open-telemetry-nest/*.md"
-        ]
+        "assets": ["packages/open-telemetry-nest/*.md"]
       }
     },
     "publish": {
       "executor": "nx:run-commands",
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "options": {
-        "cwd": "packages/open-telemetry-nest",
-        "commands": [
-          "npm publish"
-        ]
+        "cwd": "packages/open-telemetry-nest/dist",
+        "commands": ["npm publish"]
       }
     }
   },

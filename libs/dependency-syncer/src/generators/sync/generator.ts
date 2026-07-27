@@ -1,13 +1,13 @@
-import { Tree, updateJson } from '@nx/devkit';
-import { getPackageJson } from '@nx/eslint-plugin/src/utils/package-json-utils';
+import { readJson, Tree, updateJson } from '@nx/devkit';
 
-type PackageName = 'open-telemetry-nest' | 'open-telemetry-zonneplan' | 'open-telemetry-node';
+type PackageName =
+  'open-telemetry-nest' | 'open-telemetry-zonneplan' | 'open-telemetry-node';
 
 // x -> y means y depends on x
 const PackageDependencyMap: Record<PackageName, PackageName[]> = {
   'open-telemetry-nest': ['open-telemetry-zonneplan'],
   'open-telemetry-zonneplan': [],
-  'open-telemetry-node': ['open-telemetry-nest', 'open-telemetry-zonneplan']
+  'open-telemetry-node': ['open-telemetry-nest', 'open-telemetry-zonneplan'],
 };
 
 function getPackagePath(packageName: PackageName) {
@@ -19,7 +19,9 @@ function getPackageIdentifier(packageName: PackageName) {
 }
 
 export async function syncGenerator(tree: Tree) {
-  Object.keys(PackageDependencyMap).forEach((packageName) => syncDepdendencyForPackage(tree, packageName as PackageName));
+  Object.keys(PackageDependencyMap).forEach((packageName) =>
+    syncDepdendencyForPackage(tree, packageName as PackageName),
+  );
 }
 
 function syncDepdendencyForPackage(tree: Tree, packageName: PackageName) {
@@ -30,9 +32,13 @@ function syncDepdendencyForPackage(tree: Tree, packageName: PackageName) {
     return;
   }
 
-
   const packageIdentifier = getPackageIdentifier(packageName);
-  const currentVersion = getPackageJson(getPackagePath(packageName)).version;
+  const packagePath = getPackagePath(packageName);
+  // readJson throws on a missing file; skip so one moved package cannot abort
+  // the release halfway, with versions bumped but ranges left unsynced.
+  const currentVersion = tree.exists(packagePath)
+    ? readJson(tree, packagePath).version
+    : undefined;
 
   if (!currentVersion) {
     console.error(`Could not find version for ${packageIdentifier}`);
@@ -41,13 +47,19 @@ function syncDepdendencyForPackage(tree: Tree, packageName: PackageName) {
 
   console.log(`Updating ${packageIdentifier} to ${currentVersion}`);
   for (const dependantPackage of dependantPackages) {
-    updateJson(tree, getPackagePath(dependantPackage), (json) => {
+    const dependantPath = getPackagePath(dependantPackage);
+
+    if (!tree.exists(dependantPath)) {
+      console.error(`Could not find ${dependantPath}, skipping`);
+      continue;
+    }
+
+    updateJson(tree, dependantPath, (json) => {
       json.dependencies ??= {};
       json.dependencies[packageIdentifier] = `^${currentVersion}`;
 
       return json;
     });
-
   }
 }
 
