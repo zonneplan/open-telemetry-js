@@ -1,23 +1,35 @@
-import { OptionsBuilder, OptionsBuilderFn, OptionsBuilderOptions } from '../models/options-builder.models';
+import {
+  OptionsBuilder,
+  OptionsBuilderFn,
+  OptionsBuilderOptions,
+} from '../models/options-builder.models';
 import {
   IOpenTelemetryTracingOptionsBuilder,
   OpenTelemetryTracingOptions,
-  OpenTelemetryTracingOptionsBuilder
+  OpenTelemetryTracingOptionsBuilder,
 } from '../../tracing';
-import { detectResources, envDetector, Resource, resourceFromAttributes } from '@opentelemetry/resources';
+import {
+  detectResources,
+  envDetector,
+  Resource,
+  resourceFromAttributes,
+} from '@opentelemetry/resources';
 import {
   IOpenTelemetryMetricsOptionsBuilder,
   OpenTelemetryMetricsOptions,
-  OpenTelemetryMetricsOptionsBuilder
+  OpenTelemetryMetricsOptionsBuilder,
 } from '../../metrics';
 import { collectDefaultMetrics as collectDefaultPrometheusMetrics } from 'prom-client';
 import { MetricProvider } from '../../metrics/providers/metric.provider';
-import { BatchLogRecordProcessor, LoggerProvider } from '@opentelemetry/sdk-logs';
+import {
+  BatchLogRecordProcessor,
+  LoggerProvider,
+} from '@opentelemetry/sdk-logs';
 import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
 import {
   IOpenTelemetryLoggingOptionsBuilder,
   OpenTelemetryLoggingOptions,
-  OpenTelemetryLoggingOptionsBuilder
+  OpenTelemetryLoggingOptionsBuilder,
 } from '../../logging';
 import { logs } from '@opentelemetry/api-logs';
 import { CompositeLogRecordExporter } from '../../logging/exporters/composite-log-record.exporter';
@@ -42,7 +54,7 @@ export interface IOpenTelemetryBuilder {
     optionsBuilderOrOptions: OptionsBuilderOptions<
       IOpenTelemetryLoggingOptionsBuilder,
       OpenTelemetryLoggingOptions
-    >
+    >,
   ): this;
 
   /**
@@ -53,7 +65,7 @@ export interface IOpenTelemetryBuilder {
     optionsBuilderOrOptions: OptionsBuilderOptions<
       IOpenTelemetryMetricsOptionsBuilder,
       OpenTelemetryMetricsOptions
-    >
+    >,
   ): this;
 
   /**
@@ -64,7 +76,7 @@ export interface IOpenTelemetryBuilder {
     optionsBuilderOrOptions: OptionsBuilderOptions<
       IOpenTelemetryTracingOptionsBuilder,
       OpenTelemetryTracingOptions
-    >
+    >,
   ): this;
 
   /**
@@ -91,21 +103,19 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   }
 
   public withLogging(
-    optionsBuilder: OptionsBuilderFn<IOpenTelemetryLoggingOptionsBuilder>
+    optionsBuilder: OptionsBuilderFn<IOpenTelemetryLoggingOptionsBuilder>,
   ): this;
-  public withLogging(
-    options: OpenTelemetryLoggingOptions
-  ): this;
+  public withLogging(options: OpenTelemetryLoggingOptions): this;
   /** @inheritdoc */
   public withLogging(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       OpenTelemetryLoggingOptionsBuilder,
       OpenTelemetryLoggingOptions
-    >
+    >,
   ): this {
     const options = this.getOptions(
       OpenTelemetryLoggingOptionsBuilder,
-      optionsBuilderOrOptions
+      optionsBuilderOrOptions,
     );
 
     this.loggingOptions = this.mergeOptions(this.loggingOptions, options);
@@ -113,21 +123,19 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   }
 
   public withMetrics(
-    optionsBuilder: OptionsBuilderFn<IOpenTelemetryMetricsOptionsBuilder>
+    optionsBuilder: OptionsBuilderFn<IOpenTelemetryMetricsOptionsBuilder>,
   ): this;
-  public withMetrics(
-    options: OpenTelemetryMetricsOptions
-  ): this;
+  public withMetrics(options: OpenTelemetryMetricsOptions): this;
   /** @inheritdoc */
   public withMetrics(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       OpenTelemetryMetricsOptionsBuilder,
       OpenTelemetryMetricsOptions
-    >
+    >,
   ): this {
     const options = this.getOptions(
       OpenTelemetryMetricsOptionsBuilder,
-      optionsBuilderOrOptions
+      optionsBuilderOrOptions,
     );
 
     this.metricsOptions = this.mergeOptions(this.metricsOptions, options);
@@ -135,21 +143,19 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   }
 
   public withTracing(
-    optionsBuilder: OptionsBuilderFn<IOpenTelemetryTracingOptionsBuilder>
+    optionsBuilder: OptionsBuilderFn<IOpenTelemetryTracingOptionsBuilder>,
   ): this;
-  public withTracing(
-    options: OpenTelemetryTracingOptions
-  ): this;
+  public withTracing(options: OpenTelemetryTracingOptions): this;
   /** @inheritdoc */
   public withTracing(
     optionsBuilderOrOptions: OptionsBuilderOptions<
       OpenTelemetryTracingOptionsBuilder,
       OpenTelemetryTracingOptions
-    >
+    >,
   ): this {
     const options = this.getOptions(
       OpenTelemetryTracingOptionsBuilder,
-      optionsBuilderOrOptions
+      optionsBuilderOrOptions,
     );
 
     this.tracingOptions = this.mergeOptions(this.tracingOptions, options);
@@ -178,12 +184,12 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     }
 
     const compositeLogger = new CompositeLogRecordExporter(
-      ...this.loggingOptions.logRecordExporters
+      ...this.loggingOptions.logRecordExporters,
     );
 
     GlobalProviders.logProvider = new LoggerProvider({
       resource: this.resource,
-      processors: [new BatchLogRecordProcessor(compositeLogger)]
+      processors: [new BatchLogRecordProcessor({ exporter: compositeLogger })],
     });
     logs.setGlobalLoggerProvider(GlobalProviders.logProvider);
 
@@ -199,7 +205,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
 
     const meterProvider = new MeterProvider({
       resource: this.resource,
-      readers: this.metricsOptions.metricReaders
+      readers: this.metricsOptions.metricReaders,
     });
     GlobalProviders.metricReaders = [...this.metricsOptions.metricReaders];
 
@@ -225,7 +231,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
       resource: this.resource,
       sampler: this.tracingOptions.sampler,
       instrumentations: this.tracingOptions.instrumentations,
-      spanProcessors: this.tracingOptions.spanProcessors
+      spanProcessors: this.tracingOptions.spanProcessors,
     });
 
     sdk.start();
@@ -240,11 +246,11 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
    */
   private getResource(): Resource {
     const baseResource = resourceFromAttributes({
-      [ATTR_SERVICE_NAME]: this.serviceName
+      [ATTR_SERVICE_NAME]: this.serviceName,
     });
 
     const detectedResources = detectResources({
-      detectors: [envDetector]
+      detectors: [envDetector],
     });
 
     return baseResource.merge(detectedResources);
@@ -255,7 +261,7 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
     TOptions extends object,
   >(
     builderType: new () => TBuilder,
-    optionsBuilderOrOptions: OptionsBuilderOptions<TBuilder, TOptions>
+    optionsBuilderOrOptions: OptionsBuilderOptions<TBuilder, TOptions>,
   ): TOptions {
     if (typeof optionsBuilderOrOptions === 'function') {
       const builder = new builderType();
@@ -269,24 +275,30 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
   /**
    * Merges options, if the option is of type array, the result will be the concatenation of both arrays.
    */
-  private mergeOptions<
-    TOptions extends object,
-  >(
+  private mergeOptions<TOptions extends object>(
     options: TOptions | undefined,
-    overrides: Partial<TOptions>
+    overrides: Partial<TOptions>,
   ): TOptions {
-    const merged = { ...options };
+    const merged = { ...options } as TOptions;
 
     for (const [key, value] of Object.entries(overrides) as Entries<TOptions>) {
+      // Read is hoisted so the @ts-expect-error below covers only the write,
+      // and stays put if the formatter reflows the ternary.
+      const current = merged[key] as unknown[] | undefined;
       // @ts-expect-error - we know that the key is a key of TOptions
-      merged[key] = Array.isArray(value) ? [...(merged[key] ?? []), ...value] : value;
+      merged[key] = Array.isArray(value)
+        ? [...(current ?? []), ...value]
+        : value;
     }
 
-    return merged as TOptions;
+    return merged;
   }
 
   private isAtLeastDebugDiagLogLevel(): boolean {
-    return [DiagLogLevel.DEBUG, DiagLogLevel.VERBOSE, DiagLogLevel.ALL]
-      .includes(this.diagLogLevel ?? DiagLogLevel.NONE);
+    return [
+      DiagLogLevel.DEBUG,
+      DiagLogLevel.VERBOSE,
+      DiagLogLevel.ALL,
+    ].includes(this.diagLogLevel ?? DiagLogLevel.NONE);
   }
 }

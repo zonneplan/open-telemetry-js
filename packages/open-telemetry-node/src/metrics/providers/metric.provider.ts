@@ -1,7 +1,10 @@
-import { MetricOptions as OtelMetricOptions } from '@opentelemetry/api';
+import { Meter, MetricOptions as OtelMetricOptions } from '@opentelemetry/api';
 import { Gauge } from '../metrics/gauge';
-import { MetricOptions, Metrics, MetricTypeMap } from '../models/metric-options.model';
-import { Meter } from '@opentelemetry/api/build/src/metrics/Meter';
+import {
+  MetricOptions,
+  Metrics,
+  MetricTypeMap,
+} from '../models/metric-options.model';
 
 export class MetricProvider {
   private readonly registeredMetrics: Map<string, Metrics> = new Map<
@@ -9,8 +12,7 @@ export class MetricProvider {
     Metrics
   >();
 
-  public constructor(private readonly meter: Meter) {
-  }
+  public constructor(private readonly meter: Meter) {}
 
   public getMetric(name: string): Metrics | undefined {
     return this.registeredMetrics.get(name);

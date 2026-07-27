@@ -14,7 +14,7 @@ export class CompositeLogRecordExporter implements LogRecordExporter {
   /** @inheritdoc */
   public export(
     logs: ReadableLogRecord[],
-    resultCallback: (result: ExportResult) => void
+    resultCallback: (result: ExportResult) => void,
   ): void {
     for (const exporter of this._exporters) {
       exporter.export(logs, resultCallback);
@@ -23,8 +23,13 @@ export class CompositeLogRecordExporter implements LogRecordExporter {
 
   /** @inheritdoc */
   public async shutdown(): Promise<void> {
-    await Promise.all(
-      this._exporters.map((exporter) => exporter.shutdown())
+    await Promise.all(this._exporters.map((exporter) => exporter.shutdown()));
+  }
+
+  /** @inheritdoc */
+  public async forceFlush(): Promise<void> {
+    await Promise.allSettled(
+      this._exporters.map((exporter) => exporter.forceFlush()),
     );
   }
 }

@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Counter, Gauge, span, spanAttribute } from '@zonneplan/open-telemetry-node';
+import type { Counter } from '@zonneplan/open-telemetry-node';
+import { Gauge, span, spanAttribute } from '@zonneplan/open-telemetry-node';
 import { InjectMetric, LoggerService } from '@zonneplan/open-telemetry-nest';
-import { METRICS_APP_CONTROLLER_GET, METRICS_APP_CONTROLLER_LAST_CALLED } from '../providers/metrics.provider';
+import {
+  METRICS_APP_CONTROLLER_GET,
+  METRICS_APP_CONTROLLER_LAST_CALLED,
+} from '../providers/metrics.provider';
 
 @Injectable()
 export class AppService {
@@ -13,7 +17,7 @@ export class AppService {
     private readonly getCounter: Counter,
     @InjectMetric(METRICS_APP_CONTROLLER_LAST_CALLED)
     private readonly lastCalledGauge: Gauge,
-    private readonly logger: LoggerService
+    private readonly logger: LoggerService,
   ) {
     logger.setContext(this.constructor.name);
   }
@@ -36,12 +40,15 @@ export class AppService {
    * the name is automatically inferred, but technically does not match the Open telemetry spec, so it's recommended to always provide a name.
    * @todo add a default prefix for attribute names
    */
-  getData(@spanAttribute((val: Date) => val.toISOString()) date: Date, @spanAttribute() name: string): {
-    message: string
+  getData(
+    @spanAttribute((val: Date) => val.toISOString()) date: Date,
+    @spanAttribute() name: string,
+  ): {
+    message: string;
   } {
     this.getCounter.add(1);
     this.lastCalledGauge.record(Date.now(), {
-      attr: 'test'
+      attr: 'test',
     });
     this.logger.log('getData called', { name, date: date.toISOString() });
 

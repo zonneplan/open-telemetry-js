@@ -9,12 +9,14 @@ describe('CompositeLogRecordExporter', () => {
   beforeEach(() => {
     exporter1 = {
       export: jest.fn(),
-      shutdown: jest.fn()
+      shutdown: jest.fn(),
+      forceFlush: jest.fn(),
     };
 
     exporter2 = {
       export: jest.fn(),
-      shutdown: jest.fn()
+      shutdown: jest.fn(),
+      forceFlush: jest.fn(),
     };
 
     exporter = new CompositeLogRecordExporter(exporter1, exporter2);
@@ -43,6 +45,31 @@ describe('CompositeLogRecordExporter', () => {
 
       expect(exporter1.shutdown).toHaveBeenCalled();
       expect(exporter2.shutdown).toHaveBeenCalled();
+    });
+  });
+
+  describe('forceFlush', () => {
+    it('should call forceFlush method of all exporters', async () => {
+      // Act
+      await exporter.forceFlush();
+
+      // Assert
+      expect(exporter1.forceFlush).toHaveBeenCalled();
+      expect(exporter2.forceFlush).toHaveBeenCalled();
+    });
+
+    it('should not reject when an exporter fails to flush', async () => {
+      // Arrange
+      (exporter1.forceFlush as jest.Mock).mockRejectedValue(
+        new Error('flush failed'),
+      );
+
+      // Act
+      const result = exporter.forceFlush();
+
+      // Assert
+      await expect(result).resolves.toBeUndefined();
+      expect(exporter2.forceFlush).toHaveBeenCalled();
     });
   });
 });

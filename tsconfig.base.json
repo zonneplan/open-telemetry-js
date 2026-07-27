@@ -4,16 +4,15 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es2022",
-    "module": "esnext",
+    "module": "node16",
     "lib": ["es2022", "esnext.disposable", "DOM"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
     "resolveJsonModule": true,
     "strict": true,
     "allowUnusedLabels": false,
@@ -29,17 +28,18 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@zonneplan/dependency-syncer": ["libs/dependency-syncer/src/index.ts"],
+      "@zonneplan/dependency-syncer": ["./libs/dependency-syncer/src/index.ts"],
       "@zonneplan/open-telemetry-nest": [
-        "packages/open-telemetry-nest/src/index.ts"
+        "./packages/open-telemetry-nest/src/index.ts"
       ],
       "@zonneplan/open-telemetry-node": [
-        "packages/open-telemetry-node/src/index.ts"
+        "./packages/open-telemetry-node/src/index.ts"
       ],
       "@zonneplan/open-telemetry-zonneplan": [
-        "packages/open-telemetry-zonneplan/src/index.ts"
+        "./packages/open-telemetry-zonneplan/src/index.ts"
       ]
-    }
+    },
+    "types": ["*"]
   },
   "exclude": ["node_modules", "tmp"]
 }
