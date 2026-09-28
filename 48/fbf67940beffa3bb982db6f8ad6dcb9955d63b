@@ -1,0 +1,29 @@
+packages/open-telemetry-nest/package.json
+  s_7fd0520da114c6::t_91570f020b65b5 15-17
+  s_7fd0520da114c6::t_792be9a1e10bf1 29
+packages/open-telemetry-zonneplan/package.json
+  s_7fd0520da114c6::t_a24f2fbea8f4f4 17-19
+  s_7fd0520da114c6::t_7b00ad4600a6e5 29-32
+package-lock.json
+  s_7fd0520da114c6::t_562980288d5d5c 3,9,8641,29023,29030,29036,29038-29040,29045,29068,29077-29078,29081-29086
+packages/open-telemetry-nest/package-lock.json
+  s_7fd0520da114c6::t_8545302a08bb4c 22,24-26,720,1164,1173,1809,1827,2700,2902,3162,3892,4506,4731,4833,4920,4932
+packages/open-telemetry-zonneplan/package-lock.json
+  s_7fd0520da114c6::t_f64bfa66acde39 22-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "48fbf67940beffa3bb982db6f8ad6dcb9955d63b",
+  "prompts": {},
+  "sessions": {
+    "s_7fd0520da114c6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bc3890ed-6a53-432a-be64-a3ac80eacf14",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "ProgMishaS <74408752+ProgMishaS@users.noreply.github.com>"
+    }
+  }
+}
