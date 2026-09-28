@@ -1,0 +1,19 @@
+package-lock.json
+  s_7fd0520da114c6::t_747efdf399a94c 139-172,2399-2410,5407-5440,8525,8542,8559,8576,8593,8610,8627,8644,8661,8678,8695,8712,8733
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "779d3a3201836ac1968cc6ed01f5c46613e2b578",
+  "prompts": {},
+  "sessions": {
+    "s_7fd0520da114c6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bc3890ed-6a53-432a-be64-a3ac80eacf14",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "ProgMishaS <74408752+ProgMishaS@users.noreply.github.com>"
+    }
+  }
+}
