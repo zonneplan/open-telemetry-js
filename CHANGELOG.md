@@ -2,6 +2,12 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.5.0](https://github.com/zonneplan/open-telemetry-js/compare/v1.4.1...v1.5.0) (2026-09-29)
+
+### Features
+
+* **nest:** support NestJS 12 via peer dependencies ([48fbf67](https://github.com/zonneplan/open-telemetry-js/commit/48fbf67940beffa3bb982db6f8ad6dcb9955d63b))
+
 ## [1.4.1](https://github.com/zonneplan/open-telemetry-js/compare/v1.4.0...v1.4.1) (2026-07-27)
 
 ## [1.4.0](https://github.com/zonneplan/open-telemetry-js/compare/v1.3.5...v1.4.0) (2026-06-15)
