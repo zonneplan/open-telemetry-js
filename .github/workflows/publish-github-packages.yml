@@ -1,0 +1,55 @@
+name: 'Publish packages to GitHub Packages'
+
+# npmjs stays the primary registry. GitHub Packages carries the same versions, so projects that
+# also install private @zonneplan packages from GitHub can resolve the whole scope there.
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'Tag to publish, e.g. v1.5.0'
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Tag to publish, e.g. v1.5.0'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    name: Publish to GitHub Packages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the tag
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://npm.pkg.github.com/
+          scope: '@zonneplan'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --include=optional
+
+      - name: Build packages
+        run: npx nx run-many --target=build --projects=open-telemetry-node,open-telemetry-nest,open-telemetry-zonneplan
+
+      # Order matters, packages with dependencies are published last
+      - name: Publish packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for project in open-telemetry-node open-telemetry-nest open-telemetry-zonneplan; do
+            (cd "packages/$project/dist" && npm publish --registry=https://npm.pkg.github.com/)
+          done

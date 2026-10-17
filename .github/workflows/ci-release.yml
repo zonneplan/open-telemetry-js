@@ -10,6 +10,8 @@ jobs:
   main:
     name: Release package
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.get_tag.outputs.tag }}
 
     steps:
       - name: Checkout the repository
@@ -60,3 +62,12 @@ jobs:
           npx nx run open-telemetry-nest:publish
           npx nx run open-telemetry-zonneplan:publish
 
+  github-packages:
+    name: Publish to GitHub Packages
+    needs: main
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/publish-github-packages.yml
+    with:
+      ref: ${{ needs.main.outputs.tag }}
