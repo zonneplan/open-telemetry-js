@@ -6,13 +6,13 @@ services:
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Editor
     volumes:
       - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/ds.yaml:ro
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
       - grafana-data:/var/lib/grafana
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     depends_on:
       - prometheus
       - tempo
@@ -29,9 +29,9 @@ services:
       - --stability.level=experimental
       - /etc/alloy/config.river
     ports:
-      - "12345:12345"
-      - 4317:4317
-      - 4318:4318
+      - "127.0.0.1:12345:12345"
+      - "127.0.0.1:4317:4317"
+      - "127.0.0.1:4318:4318"
     depends_on:
       - loki
       - tempo
@@ -45,7 +45,7 @@ services:
     command:
       - '-config.file=/etc/loki/loki.yaml'
     ports:
-      - 3100:3100
+      - "127.0.0.1:3100:3100"
 
   prometheus:
     image: prom/prometheus:latest
@@ -56,7 +56,7 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--web.enable-remote-write-receiver'
     ports:
-      - 9090:9090
+      - "127.0.0.1:9090:9090"
 
   tempo:
     image: grafana/tempo:2.9.0
@@ -66,7 +66,7 @@ services:
     command:
       - '-config.file=/etc/tempo.yaml'
     ports:
-      - 3200:3200
+      - "127.0.0.1:3200:3200"
 
 volumes:
   grafana-data:
