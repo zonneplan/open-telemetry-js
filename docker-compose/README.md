@@ -24,3 +24,5 @@ This will start all the components and make them available on the following port
 - Prometheus: [http://localhost:9090](http://localhost:9090)
 - Grafana Loki: [http://localhost:3100](http://localhost:3100)
 - Grafana Tempo: [http://localhost:3200](http://localhost:3200)
+
+All ports are bound to `127.0.0.1` only. The stack has no authentication (Grafana runs with anonymous access), so it is meant for local development and must not be exposed to a network.
