@@ -1,0 +1,21 @@
+docker-compose/README.md
+  s_352ef39439bc57::t_cb0553c2cb6a4a 27-28
+docker-compose/docker-compose.yml
+  s_352ef39439bc57::t_b0a9f329ba76cd 9,15,32-34,48,59,69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "15d88279a6adebd1b2238cc5f1a5ffb991fe87dc",
+  "prompts": {},
+  "sessions": {
+    "s_352ef39439bc57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a2f7121d-2368-4f0f-aa59-ccae27fb2f02",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Kevin Boonstra <23527353+Strazz1337@users.noreply.github.com>"
+    }
+  }
+}
