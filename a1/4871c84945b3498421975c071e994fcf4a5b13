@@ -1,0 +1,19 @@
+.github/dependabot.yml
+  s_21057c985ef922::t_a31aa164b4099c 1-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a14871c84945b3498421975c071e994fcf4a5b13",
+  "prompts": {},
+  "sessions": {
+    "s_21057c985ef922": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f9ba84eb-f204-43ca-b25b-981a063dd076",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Kevin Boonstra <23527353+Strazz1337@users.noreply.github.com>"
+    }
+  }
+}
