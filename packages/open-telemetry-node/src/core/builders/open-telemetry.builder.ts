@@ -25,13 +25,12 @@ import {
   BatchLogRecordProcessor,
   LoggerProvider,
 } from '@opentelemetry/sdk-logs';
-import { diag, DiagConsoleLogger, DiagLogLevel } from '@opentelemetry/api';
+import { diag, DiagConsoleLogger, DiagLogLevel, logs } from '@opentelemetry/api';
 import {
   IOpenTelemetryLoggingOptionsBuilder,
   OpenTelemetryLoggingOptions,
   OpenTelemetryLoggingOptionsBuilder,
 } from '../../logging';
-import { logs } from '@opentelemetry/api-logs';
 import { CompositeLogRecordExporter } from '../../logging/exporters/composite-log-record.exporter';
 import { GlobalProviders } from '../../globals';
 import { Entries } from '../types/entries.type';

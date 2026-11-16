@@ -1,5 +1,5 @@
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
-import { AlwaysOnSampler, BatchSpanProcessor } from '@opentelemetry/sdk-trace-base';
+import { AlwaysOnSampler, BatchSpanProcessor } from '@opentelemetry/sdk-trace';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { OpenTelemetryTracingOptionsBuilder } from '@zonneplan/open-telemetry-node';
 
@@ -16,5 +16,5 @@ export const DefaultTracingOptions = new OpenTelemetryTracingOptionsBuilder()
   )
   .withSampler(new AlwaysOnSampler())
   .withSpanExporter(new OTLPTraceExporter())
-  .withSpanProcessor((exporter) => new BatchSpanProcessor(exporter))
+  .withSpanProcessor((exporter) => new BatchSpanProcessor({ exporter }))
   .build();

@@ -1,5 +1,5 @@
 import { OptionsBuilder, OptionsBuilderFn } from '../../core/models/options-builder.models';
-import { Sampler, SpanExporter, SpanProcessor } from '@opentelemetry/sdk-trace-base';
+import { Sampler, SpanExporter, SpanProcessor } from '@opentelemetry/sdk-trace';
 import { OpenTelemetryTracingOptions } from '../models/tracing-options.model';
 import * as assert from 'node:assert';
 import { InvalidOptionsError } from '../../core/errors/invalid-options.error';

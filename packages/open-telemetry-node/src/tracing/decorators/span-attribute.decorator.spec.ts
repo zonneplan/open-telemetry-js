@@ -2,7 +2,7 @@ import { InvalidParameterAttributeError } from '../errors/invalid-parameter-attr
 import { spanAttribute } from './span-attribute.decorator';
 import { span } from './span.decorator';
 import { OpenTelemetryBuilder } from '../../core/builders/open-telemetry.builder';
-import { AlwaysOnSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { AlwaysOnSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace';
 import { getSpanAttributes } from '../../../testing/util';
 import { trace } from '@opentelemetry/api';
 
