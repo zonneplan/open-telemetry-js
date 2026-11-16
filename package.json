@@ -66,13 +66,6 @@
     "webpack": "5.112.2",
     "webpack-cli": "7.3.1"
   },
-  "overrides": {
-    "axios": "^1.21.0",
-    "brace-expansion": "^5.0.8",
-    "js-yaml@^4": "^4.3.0",
-    "qs@^6": "^6.15.3",
-    "uuid@^8": "^11.1.1"
-  },
   "optionalDependencies": {
     "@nx/nx-linux-x64-gnu": "23.3.1"
   },
