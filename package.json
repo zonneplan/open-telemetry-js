@@ -66,6 +66,9 @@
     "webpack": "5.112.2",
     "webpack-cli": "7.3.1"
   },
+  "overrides": {
+    "undici": "7.30.2"
+  },
   "optionalDependencies": {
     "@nx/nx-linux-x64-gnu": "23.3.1"
   },
