@@ -1,0 +1,21 @@
+packages/open-telemetry-node/src/core/builders/open-telemetry.builder.spec.ts
+  s_b9c0db314b33b3::t_3524bc7905334c 1-57
+packages/open-telemetry-node/src/core/builders/open-telemetry.builder.ts
+  s_b9c0db314b33b3::t_a25fd43fbbe24f 28,236-240,247-270
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0d951e6653a06586ecf42937f9a978af77e35179",
+  "prompts": {},
+  "sessions": {
+    "s_b9c0db314b33b3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2c1b7d01-9f2b-4bd2-955e-1067e20cda57",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "ProgMishaS <74408752+ProgMishaS@users.noreply.github.com>"
+    }
+  }
+}
