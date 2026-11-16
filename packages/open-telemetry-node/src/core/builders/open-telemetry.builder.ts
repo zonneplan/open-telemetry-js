@@ -233,10 +233,38 @@ export class OpenTelemetryBuilder implements IOpenTelemetryBuilder {
       spanProcessors: this.tracingOptions.spanProcessors,
     });
 
-    sdk.start();
+    if (this.loggingOptions) {
+      this.startWithoutSdkLogging(sdk);
+    } else {
+      sdk.start();
+    }
 
     if (this.isAtLeastDebugDiagLogLevel()) {
       console.debug('Tracing enabled.');
+    }
+  }
+
+  /**
+   * Starts the NodeSDK without letting it build a logger provider of its own.
+   *
+   * The logger provider from {@link tryEnableLogging} owns the global logs API.
+   * NodeSDK builds a second provider from the environment unless
+   * `OTEL_LOGS_EXPORTER` is `none`, and that provider's registration fails with
+   * a duplicate-registration error. NodeSDK reads the variable during `start()`,
+   * so it is set to `none` only for that call and only when the application has
+   * not set it; an explicit value is respected.
+   */
+  private startWithoutSdkLogging(sdk: NodeSDK) {
+    if (process.env['OTEL_LOGS_EXPORTER'] !== undefined) {
+      sdk.start();
+      return;
+    }
+
+    process.env['OTEL_LOGS_EXPORTER'] = 'none';
+    try {
+      sdk.start();
+    } finally {
+      delete process.env['OTEL_LOGS_EXPORTER'];
     }
   }
 
