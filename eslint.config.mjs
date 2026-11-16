@@ -3,7 +3,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import js from '@eslint/js';
 import baseConfig from './eslint.base.config.mjs';
-import jsoncEslintParser from 'jsonc-eslint-parser';
+import * as jsoncEslintParser from 'jsonc-eslint-parser';
 
 const compat = new FlatCompat({
   baseDirectory: dirname(fileURLToPath(import.meta.url)),
