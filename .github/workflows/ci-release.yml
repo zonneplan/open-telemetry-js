@@ -6,14 +6,20 @@ permissions:
   id-token: write
   contents: write
 
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   main:
     name: Release package
+    if: github.ref == 'refs/heads/main'
+    environment: release
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           fetch-depth: 0
 
@@ -23,7 +29,7 @@ jobs:
           git config --local user.name "GitHub Actions"
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: 24
           cache: npm
@@ -41,22 +47,31 @@ jobs:
         id: get_tag
         run: echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
 
-      - name: Remove tag from last commit
-        run: git tag -d ${{ steps.get_tag.outputs.tag }}
-
-      - name: Commit version bump and tag as latest
+      # Nothing is pushed until every package is published, so a failed publish
+      # leaves the remote untouched and a rerun computes the same version again
+      - name: Commit version bump and tag
+        env:
+          TAG: ${{ steps.get_tag.outputs.tag }}
         run: |
+          git tag -d "$TAG"
           git add .
-          git commit -m "chore(release): bump version to ${{ steps.get_tag.outputs.tag }}"
-          git push
-
-          git tag ${{ steps.get_tag.outputs.tag }}
-          git push origin ${{ steps.get_tag.outputs.tag }}
+          git commit -m "chore(release): bump version to $TAG"
+          git tag "$TAG"
 
       # Order matters for the publishing, packages with dependencies should be published last
-      - name: Publish package
+      # Versions already on npm (from a partially failed earlier run) are skipped
+      - name: Publish packages
         run: |
-          npx nx run open-telemetry-node:publish
-          npx nx run open-telemetry-nest:publish
-          npx nx run open-telemetry-zonneplan:publish
+          for project in open-telemetry-node open-telemetry-nest open-telemetry-zonneplan; do
+            spec=$(node -p "const p = require('./packages/$project/package.json'); p.name + '@' + p.version")
+            if [ -n "$(npm view "$spec" version 2> /dev/null)" ]; then
+              echo "$spec is already published, skipping"
+            else
+              npx nx run "$project:publish"
+            fi
+          done
 
+      - name: Push version bump and tag
+        env:
+          TAG: ${{ steps.get_tag.outputs.tag }}
+        run: git push --atomic origin HEAD "refs/tags/$TAG"
