@@ -1,0 +1,21 @@
+.github/workflows/ci-main.yml
+  s_e1c59f44a1a0a3::t_db398713acf1a4 26
+.github/workflows/ci-pull-request.yml
+  s_e1c59f44a1a0a3::t_db398713acf1a4 29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a85f4ba1d0a6f75e87a2fe890a0320945638f557",
+  "prompts": {},
+  "sessions": {
+    "s_e1c59f44a1a0a3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6db01ed5-56b3-4e74-8901-c9d99e4be30b",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "ProgMishaS <74408752+ProgMishaS@users.noreply.github.com>"
+    }
+  }
+}
