@@ -1,5 +1,5 @@
 import { LogLevel } from '@nestjs/common';
-import { SeverityNumber } from '@opentelemetry/api-logs';
+import { SeverityNumber } from '@opentelemetry/api';
 
 /**
  * @see https://github.com/winstonjs/winston?tab=readme-ov-file#logging

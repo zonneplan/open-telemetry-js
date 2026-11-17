@@ -1,6 +1,6 @@
 import { startSpan } from './start-span';
 import { OpenTelemetryBuilder } from '../../core/builders/open-telemetry.builder';
-import { AlwaysOnSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { AlwaysOnSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace';
 import { getSpanAttributes, getSpanName } from '../../../testing/util';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

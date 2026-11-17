@@ -1,9 +1,8 @@
 ﻿import { LogLevel } from '@nestjs/common';
 import { Logger } from 'winston';
 import { GlobalProviders } from '@zonneplan/open-telemetry-node';
-import { LogAttributes, SeverityNumber } from '@opentelemetry/api-logs';
 import { LoggerService } from '../services/logger.service';
-import { context, diag } from '@opentelemetry/api';
+import { Attributes, context, diag, SeverityNumber } from '@opentelemetry/api';
 import {
   NEST_LOG_LEVEL_WINSTON_SEVERITY,
   SEVERITY_NUMBER_TO_TEXT_MAP,
@@ -112,7 +111,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     this.logToOpenTelemetry(nestLogLevel, severityNumber, severityText, body, attributes);
   }
 
-  private logToWinston(logLevel: LogLevel, body: string, attributes: LogAttributes) {
+  private logToWinston(logLevel: LogLevel, body: string, attributes: Attributes) {
     if (!this.isLevelEnabled(logLevel, NestWinstonLoggerAdapter.winstonLogLevelNest)) {
       return;
     }
@@ -120,7 +119,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     this.logger[this.toWinstonLogLevel(logLevel)](body, attributes);
   }
 
-  private logToOpenTelemetry(logLevel: LogLevel, severityNumber: SeverityNumber, severityText: string, body: string, attributes: LogAttributes) {
+  private logToOpenTelemetry(logLevel: LogLevel, severityNumber: SeverityNumber, severityText: string, body: string, attributes: Attributes) {
     if (!this.isLevelEnabled(logLevel, NestWinstonLoggerAdapter.otelLogLevelNest)) {
       return;
     }
@@ -149,7 +148,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
    */
   private getContextAndAttributes(params: OptionalParams): {
     context: string | undefined;
-    attributes: LogAttributes;
+    attributes: Attributes;
   } {
     const param = params[0];
     if (!param) {
@@ -161,7 +160,7 @@ export class NestWinstonLoggerAdapter extends LoggerService {
     }
 
     if (typeof param === 'object') {
-      return { context: undefined, attributes: param as LogAttributes };
+      return { context: undefined, attributes: param as Attributes };
     }
 
     return { context: undefined, attributes: {} };

@@ -1,6 +1,6 @@
 import { span } from './span.decorator';
 import { OpenTelemetryBuilder } from '../../core/builders/open-telemetry.builder';
-import { AlwaysOffSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace-node';
+import { AlwaysOffSampler, InMemorySpanExporter, NoopSpanProcessor } from '@opentelemetry/sdk-trace';
 
 describe('span decorator', () => {
   class TestClass {
