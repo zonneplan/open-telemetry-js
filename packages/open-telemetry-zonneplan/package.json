@@ -1,7 +1,7 @@
 {
   "name": "@zonneplan/open-telemetry-zonneplan",
   "license": "MIT",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "dependencies": {
     "@opentelemetry/auto-instrumentations-node": "^0.83.0",
     "@opentelemetry/exporter-logs-otlp-http": "^0.301.0",
@@ -9,8 +9,8 @@
     "@opentelemetry/exporter-trace-otlp-http": "^0.301.0",
     "@opentelemetry/sdk-metrics": "^3.1.0",
     "@opentelemetry/sdk-trace": "^3.1.0",
-    "@zonneplan/open-telemetry-nest": "^1.5.0",
-    "@zonneplan/open-telemetry-node": "^1.5.0",
+    "@zonneplan/open-telemetry-nest": "^1.5.1",
+    "@zonneplan/open-telemetry-node": "^1.5.1",
     "tslib": "^2.9.1",
     "winston": "^3.19.0"
   },
