@@ -1,0 +1,29 @@
+packages/open-telemetry-nest/package.json
+  s_e1c59f44a1a0a3::t_b9d03718602e3d 4,9
+packages/open-telemetry-zonneplan/package.json
+  s_e1c59f44a1a0a3::t_b9d03718602e3d 4,12-13
+CHANGELOG.md
+  s_e1c59f44a1a0a3::t_ec0ab4f2415071 5-6
+libs/dependency-syncer/package.json
+  s_e1c59f44a1a0a3::t_08fb82f696cef1 3
+package.json
+  s_e1c59f44a1a0a3::t_d1b97b3d8d2077 3
+packages/open-telemetry-node/package.json
+  s_e1c59f44a1a0a3::t_52286b97203e41 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "dacc9a5d9cdbcb906e665eab1d661531a5957120",
+  "prompts": {},
+  "sessions": {
+    "s_e1c59f44a1a0a3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6db01ed5-56b3-4e74-8901-c9d99e4be30b",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "ProgMishaS <74408752+ProgMishaS@users.noreply.github.com>"
+    }
+  }
+}
