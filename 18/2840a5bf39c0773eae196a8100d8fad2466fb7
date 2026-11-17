@@ -1,0 +1,25 @@
+AGENTS.md
+  h_6f41298e8a5ecd 9
+  s_ccda407ec2d4e7::t_c2b87fd035ec94 1-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "182840a5bf39c0773eae196a8100d8fad2466fb7",
+  "prompts": {},
+  "humans": {
+    "h_6f41298e8a5ecd": {
+      "author": "ProgMishaS <74408752+ProgMishaS@users.noreply.github.com>"
+    }
+  },
+  "sessions": {
+    "s_ccda407ec2d4e7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e54e3fae-2214-4af0-a6ff-4a734ebe597e",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "ProgMishaS <74408752+ProgMishaS@users.noreply.github.com>"
+    }
+  }
+}
